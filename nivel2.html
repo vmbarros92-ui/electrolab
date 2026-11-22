@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ElectroLab · Nivel 2 · Serie y paralelo</title>
+<style>
+:root{--petrol:#276e7c;--petrol-dark:#1a5665;--petrol-light:#3e95a2;--teal:#188d87;--ink:#1c3b48;--muted:#627e87;--cloud:#eef7f9;--paper:#fff;--border:#b9dde4;--gold:#f9e2a3;--gold-deep:#e4b34e;--coral:#c05b55;--amber:#c99427;--violet:#806ebf;--cyan:#13a4b2}
+*{box-sizing:border-box}body{margin:0;padding:8px;background:linear-gradient(#edf7f9,#e3f1f4);color:var(--ink);font:15px/1.45 'Segoe UI',Arial,sans-serif}button,select,input,textarea{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.48;filter:saturate(.45)}:focus-visible{outline:3px solid #e9aa42;outline-offset:2px}
+.shell{max-width:1400px;margin:0 auto;background:#f9fdfe;border:2px solid #a8d7de;border-radius:18px;overflow:hidden;box-shadow:0 7px 28px #194e6020}
+.topbar{min-height:60px;padding:10px 17px;background:linear-gradient(100deg,#1d5969,#2a7e8a);color:white;display:flex;align-items:center;justify-content:space-between;gap:10px}.header-left{display:flex;align-items:center;gap:14px;min-width:0}.brand{font-size:23px;font-weight:900;letter-spacing:-.5px;display:flex;align-items:center;gap:8px;white-space:nowrap}.brand-mark{width:34px;height:34px;display:inline-grid;place-items:center;border:2px solid #c6f8ef;border-radius:10px;color:#e7c258}.top-title{font-size:17px;font-weight:760;border-left:2px solid #8cc3cc;padding-left:16px}.header-actions{display:flex;gap:8px}.small-action{background:#ffffff22;border:1px solid #a1d6de99;padding:7px 11px;border-radius:9px;color:#fff;font-weight:750}.small-action:hover{background:#ffffff33}
+.content{padding:16px}.intro{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 0 14px;color:#35616d;font-size:14px}.intro strong{color:#1a596a}.stage{flex:0 0 auto;border:1px solid #b9e3e6;border-radius:12px;background:#e0f5f3;color:#257181;font-weight:800;padding:9px 14px}
+.typebar{border:2px solid #a8d2d9;border-radius:15px;padding:12px 14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:linear-gradient(90deg,#e7f3f6,#f4fbfb);margin-bottom:13px}.type-title{font-size:17px;font-weight:850;margin-right:7px}.type-choice{display:inline-flex;align-items:center;gap:9px;border:2px solid #b4d8df;background:white;color:#285d6d;border-radius:11px;min-height:46px;padding:9px 17px;font-weight:850}.type-choice.active{background:linear-gradient(105deg,#d5f3eb,#b7e7e2);border-color:#37aaa1;box-shadow:0 0 0 2px #62c3b31e}.type-choice .radio-mark{width:18px;height:18px;border-radius:50%;border:2px solid #318c96;display:inline-grid;place-items:center}.type-choice.active .radio-mark:after{content:'';width:9px;height:9px;background:#1a8f89;border-radius:50%}.type-instruction{margin-left:auto;font-size:12px;color:#537985;max-width:340px}
+.palette{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 13px;background:linear-gradient(105deg,#fff1ce,#fcfcf4,#e6f5f6);border:1px solid #e9d08d;border-radius:15px;margin-bottom:13px}.palette-label{display:flex;align-items:center;gap:9px;font-weight:850;background:linear-gradient(110deg,#ffe5a1,#ffefc2);border:1px solid #ebcc7d;border-radius:12px;padding:7px 11px 7px 6px;white-space:nowrap}.step-one{background:linear-gradient(145deg,#18818c,#2a98a2);font-size:28px;color:#fff;width:51px;height:51px;display:grid;place-items:center;border-radius:11px;box-shadow:0 4px 10px #19788d38}.tool{min-height:48px;border:2px solid #b4d9e0;background:white;color:#28596b;border-radius:12px;display:flex;align-items:center;gap:8px;padding:7px 11px;font-weight:780;box-shadow:0 2px 0 #1e6d7b10}.tool:hover{background:#f1fafb;border-color:#55abb7}.tool[aria-pressed="true"]{background:#d9f5ef;border-color:#19a395;box-shadow:0 0 0 2px #2b9e9820}.tool .symbol{min-width:36px;height:31px;border:2px solid #6eb5bf;border-radius:9px;background:#e6f6f8;display:grid;place-items:center;font-size:17px;font-weight:900}.tool.lamp .symbol{color:#b17d15;border-color:#e5cb7a;background:#fff5d8}.tool.is-placed{border-color:#8ac7bf}.palette-tip{margin-left:auto;font-size:12px;color:#647982;line-height:1.3;max-width:220px}
+.layout{display:grid;grid-template-columns:minmax(0,1.68fr) minmax(322px,.9fr);gap:14px;align-items:stretch}.panel{border:1px solid #b5d8df;background:white;border-radius:17px;overflow:hidden;box-shadow:0 2px 7px #2363740a}.panel-head{background:linear-gradient(100deg,#246c7b,#3e8c97);min-height:47px;display:flex;align-items:center;justify-content:space-between;padding:11px 15px;color:white;gap:9px;font-weight:850}.panel-head small{font-size:11px;font-weight:600;color:#e6f6f7;text-align:right}
+.circuit-section{align-self:start}.circuit-area{padding:14px;background:linear-gradient(#fcfeff,#f4fbfc)}.circuit-stage{border:1px solid #d7ebee;background:radial-gradient(circle at 45% 40%,white,#f1f9fa);border-radius:14px;padding:9px;min-height:384px;display:flex;flex-direction:column;justify-content:center}.svg-circuit{width:100%;height:auto;display:block;max-height:435px}.svg-wire{stroke:#24697b;stroke-width:6;fill:none;stroke-linecap:round;stroke-linejoin:round}.svg-source{font-size:23px;font-weight:900;fill:#245b6a}.svg-caption{font-size:16px;font-weight:780;fill:#275e6a}.svg-caption-small{font-size:13px;fill:#647f88;font-weight:600}.svg-slot{fill:#f4fcfe;stroke:#77bfcd;stroke-width:3;stroke-dasharray:6 5}.svg-slot.filled{fill:#f0fbf8;stroke:#79cbb5;stroke-dasharray:0}.svg-value{fill:#2b6577;font-size:14px;font-weight:780}.svg-glow{transition:opacity .15s}.svg-hot{fill:#fbdf5c}.svg-legend{font-size:13px;fill:#617f88}.svg-drop{cursor:pointer}.svg-drop:hover .svg-slot{stroke:#e0b848;stroke-width:4}
+.circuit-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:11px 2px 4px}.remove-btn{background:#edf7f9;color:#226d7c;border:1px solid #b4dce2;border-radius:9px;font-weight:750;font-size:12px;padding:9px 11px}.remove-btn:hover:not(:disabled){background:#dff1f4}.mount-pill{background:#edf9f6;border:1px solid #b9e3d8;border-radius:999px;padding:8px 10px;color:#237c76;font-size:12px;font-weight:850;margin-left:auto}
+.reading-panel{margin:12px 0 5px;padding:12px;background:linear-gradient(110deg,#fff0b9,#fff7df 55%,#e9f7f4);border:1px solid #dfc36a;border-radius:15px;box-shadow:0 3px 10px #aa892b18}.reading-head{font-size:16px;color:#74591d;font-weight:900;margin-bottom:10px}.reading-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.reading{background:#fffefa;border:1px solid #ecdca5;border-radius:10px;display:flex;flex-direction:column;padding:10px;gap:6px;min-width:0}.reading strong{color:#5f4a26;font-size:12px}.readvalue{background:linear-gradient(100deg,#21899a,#3baea2);color:white;border-radius:8px;text-align:center;padding:7px 4px;font-size:18px;font-weight:900;font-variant-numeric:tabular-nums;white-space:nowrap}.readvalue.pending{background:#e0ebed;color:#70868c}.reading-secondary{font-size:11px;color:#637e86;margin-top:8px}.last-log{border-top:1px solid #efdba4;margin-top:12px;padding-top:9px}.last-log summary{font-weight:800;color:#6c5526;cursor:pointer}.log-table{width:100%;border-collapse:collapse;font-size:11px;margin-top:7px}.log-table td,.log-table th{border:1px solid #dccda8;padding:5px;text-align:center}.log-table th{background:#fff2d0}.circuit-footer{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}.legend-pill{border:1px solid #c6e5e9;border-radius:999px;background:#eff9fa;color:#597a84;font-size:11px;padding:6px 8px}.flow-legend .first{color:#a6780f}.flow-legend .second{color:#7560ad}
+.controls{display:flex;flex-direction:column}.launchpad{margin:12px 12px 0;padding:10px;background:#eef7f9;border:1px solid #c9e4e8;border-radius:12px}.launchpad-title{font-size:13px;font-weight:850;margin-bottom:8px;color:#25606e}.start-cta{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:60px;border:2px solid #b85956;border-radius:12px;color:#fff;background:linear-gradient(120deg,#bc655d,#ca7970);font-size:22px;font-weight:900}.start-cta:hover:not(:disabled){background:#b4554e}.controls>.panel-head{margin-top:13px}.controls-body{padding:12px;display:flex;flex-direction:column;gap:10px}.control{background:#fbfefe;border:1px solid #d1e8eb;border-radius:12px;padding:11px;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:62px}.control h4{margin:0;font-size:14px;font-weight:850}.control small{font-size:11px;color:#6e8a93;display:block}.ctrl-left{display:flex;gap:8px;align-items:center;min-width:0}.ctrl-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:9px;background:#e2f1f4;color:#2c7f8d;flex:none;font-size:19px}.counter-line{display:flex;gap:5px;align-items:center}.smallstep{background:#21869a;color:white;border:0;border-radius:9px;padding:5px;width:35px;height:35px;font-size:20px;font-weight:900}.voltage-val{min-width:43px;text-align:center;font-weight:900}.select-res{background:#fff;border:1px solid #b6d9e1;border-radius:8px;padding:7px 4px;color:#245e6f;font-weight:800;width:90px}.select-res:disabled{opacity:.5}.mode-choice{background:#fff;border:1px solid #b9dbe2;border-radius:9px;padding:8px;color:#2b6777;font-size:12px;max-width:175px}.toggle{display:inline-flex;border-radius:99px;width:53px;height:30px;position:relative;border:2px solid #bad1d6;background:#b3c8cd}.toggle:after{content:'';position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:white;box-shadow:0 2px 4px #0003;transition:.18s}.toggle[aria-pressed=true]{background:#51bba8;border-color:#4eb9ae}.toggle[aria-pressed=true]:after{transform:translateX(23px)}.measure-cta{display:flex;justify-content:center;align-items:center;gap:13px;width:100%;min-height:73px;background:linear-gradient(110deg,#177f7a,#22a79f);border:2px solid #147e7b;border-radius:13px;color:white;font-size:22px;font-weight:900}.measure-number{display:grid;place-items:center;width:46px;height:46px;border-radius:11px;border:2px solid #e4fffa;font-size:27px}.note{border:1px solid #e7d08a;background:linear-gradient(110deg,#fff2c0,#fff9e8 62%,#e8f6f5);color:#655123;border-radius:11px;padding:12px;font-size:14px;line-height:1.42}.note strong{color:#79571d}.lab-actions{display:grid;grid-template-columns:1fr;gap:8px}.secondary{background:#f2fafb;border:1px solid #a9d1d8;border-radius:11px;color:#24687b;font-weight:800;min-height:47px;padding:10px 12px}.secondary:hover:not(:disabled){background:#e0f2f5}.review-badge{display:inline-grid;place-items:center;border:2px solid currentColor;border-radius:10px;width:35px;height:35px;font-size:22px;font-weight:900;margin-right:6px}.review-btn{font-size:17px;min-height:58px}.quiz-button{width:100%;display:flex;gap:10px;justify-content:center;align-items:center;background:linear-gradient(110deg,#f8e6bb,#fff3d6);border:2px solid #e2c17d;border-radius:12px;color:#705421;min-height:58px;font-size:17px;font-weight:850}.quiz-badge{display:grid;place-items:center;background:#bc842b;color:#fff;font-size:25px;width:37px;height:37px;border-radius:10px}.quiz-status{color:#866d3f;font-size:11px;text-align:center;padding:4px}.smallprint{font-size:11px;color:#647f87;margin:4px 0 0;line-height:1.45}
+.footer-note{margin-top:13px}
+.overlay[hidden]{display:none!important}.overlay{position:fixed;inset:0;z-index:40;background:rgba(12,42,54,.69);padding:18px;display:flex;align-items:center;justify-content:center}.modal{background:#fff;color:var(--ink);border-radius:17px;width:min(780px,100%);max-height:92vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 25px 80px #001c2850;border:2px solid #aad9e1}.modal-head{background:linear-gradient(105deg,#1b5868,#2b8190);color:white;display:flex;align-items:center;justify-content:space-between;padding:13px 18px;gap:10px}.modal-head h2{font-size:20px;margin:0}.close-modal{background:#ffffff25;color:#fff;border:1px solid #c0e6ed;border-radius:8px;font-size:23px;width:37px;height:37px;line-height:1}.modal-body{padding:16px 20px;overflow:auto}.prediction-heading{display:flex;align-items:center;gap:14px;background:linear-gradient(100deg,#eef8fa,#fcfefe);border:1px solid #b6d7e0;border-radius:12px;padding:12px;margin:0 0 12px}.prediction-heading .num{width:67px;height:67px;display:grid;place-items:center;font-size:42px;color:#fff;background:linear-gradient(120deg,#2a8290,#48abb1);border-radius:14px;font-weight:950}.prediction-heading strong{display:block;font-size:20px}.prediction-heading small{color:#66838c}.q-card{border:1px solid #d1e6e9;border-radius:12px;margin:13px 0;padding:12px 13px;background:#fcfefe}.q-card legend{font-weight:900;padding:0 6px;max-width:100%;color:#285d6d}.q-card label{display:flex;align-items:flex-start;gap:10px;border-radius:8px;padding:8px 9px;margin:4px 0;cursor:pointer;background:#f4f9fa}.q-card label:hover{background:#e3f3f5}.q-card input[type=radio]{margin-top:3px;accent-color:#218b94}.q-card textarea{width:100%;margin-top:7px;border:1px solid #b8d9e0;border-radius:8px;padding:8px;min-height:62px}.modal-actions{display:flex;gap:9px;flex-wrap:wrap;justify-content:flex-end;margin-top:14px}.modal-actions button{min-height:45px;padding:10px 15px;border-radius:9px;font-weight:800}.primary{background:#1d8a8f;border:1px solid #14757f;color:white}.hint{background:#ffe187;color:#5b440d;border:1px solid #d1ac40}.hint-box{background:#fff8da;border:1px solid #e7c96b;border-radius:9px;padding:11px;font-size:13px;margin:12px 0}.error{color:#a23e37;font-weight:800;min-height:20px}.results-table{border-collapse:collapse;width:100%;font-size:13px;margin:10px 0}.results-table th,.results-table td{border:1px solid #c6dade;text-align:left;padding:8px}.results-table th{background:#eaf5f7}.result-card{padding:11px;border-radius:9px;border-left:4px solid #36a697;background:#f1faf7;margin:9px 0}.result-card.wrong{background:#fff6ee;border-color:#ce9a57}.result-card p{margin:5px 0 0}.score{font-size:31px;font-weight:950;color:#236d77;text-align:center;border-radius:12px;background:#e7f7f4;padding:16px;border:1px solid #b8e2d9}
+.flow-dot{stroke:#fff;stroke-width:2}.flow-electron-label{fill:white;font-weight:850;font-size:9px}.flow-legend-text{font-size:13px;fill:#637c85}.branch1{color:#c18a23}.branch2{color:#836fbf}.animated-flow{pointer-events:none}
+/* R equivalente: activity sits inside the existing readings rather than lengthening the page. */
+.eq-inline{display:flex;align-items:center;justify-content:space-between;gap:11px;margin-top:10px;padding:10px 11px;background:linear-gradient(110deg,#fffdf6,#e6f5f3);border:1px solid #e0c985;border-radius:11px}.eq-inline-copy{display:flex;flex-direction:column;min-width:0}.eq-inline-copy strong{font-size:14px;color:#66511d}.eq-inline-copy small{font-size:11px;color:#647a81}.eq-explore{flex:0 0 auto;border:1px solid #248f90;border-radius:10px;padding:10px 14px;background:linear-gradient(115deg,#287e8d,#3ea59b);color:#fff;font-weight:850;font-size:13px}.eq-explore:hover:not(:disabled){filter:brightness(1.07)}
+/* Zona de resistencia equivalente integrada en la sexta tarjeta de medición. */
+.reading-equivalent{gap:3px;padding:8px;background:linear-gradient(165deg,#fffefa,#fff6d9);border-color:#dabd70}
+.reading-equivalent .readvalue{margin-bottom:0}
+.eq-down-arrow{font-weight:950;font-size:17px;line-height:10px;align-self:center;color:#98631a;margin:0}
+.reading-equivalent .eq-explore{display:block;flex:none;width:100%;min-height:38px;padding:5px 7px;border:2px solid #98501f;background:linear-gradient(115deg,#bc6d24,#a9512c);color:#fff;font-weight:900;font-size:12px;line-height:1.13;text-align:center;white-space:normal;border-radius:10px;box-shadow:0 3px 0 rgba(100,61,30,.17)}
+.reading-equivalent .eq-explore:hover:not(:disabled){background:linear-gradient(115deg,#a95c1e,#934326);transform:translateY(-1px)}
+.reading-equivalent .eq-explore:focus-visible{outline:3px solid #185e6b;outline-offset:2px}
+.reading-equivalent .eq-explore:disabled{opacity:.55;box-shadow:none;cursor:not-allowed}
+.eq-diagram-wrap{border:1px solid #d3e7e9;border-radius:12px;background:linear-gradient(#fbfefe,#eef8f9);padding:9px;text-align:center}.eq-diagram-wrap svg{width:100%;height:auto;max-height:210px;display:block;margin:0 auto}.eq-diagram-title{font-size:12px;font-weight:900;color:#286877;margin-bottom:4px}.eq-question{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:#fff7dc;border:1px solid #e7d18b;border-radius:12px;padding:11px;margin:10px 0}.eq-question label{font-weight:800}.eq-entry{width:100px;border:2px solid #a7cdd5;border-radius:8px;padding:8px 10px;font-weight:850;text-align:center;min-height:42px}.eq-work{background:#eff9f8;border:1px solid #b8ddd9;border-radius:11px;padding:12px;margin-top:10px;animation:eq-reveal .28s ease-out}.eq-work svg{width:100%;max-height:210px}.eq-formula{font-weight:850;font-size:15px;color:#275b6b;margin:6px 0}.eq-error{color:#a34d30;font-weight:800;min-height:19px;font-size:13px}.diagram-options{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:7px 0}.diagram-option{display:block!important;border:2px solid #c8e0e5!important;border-radius:12px!important;padding:11px!important;background:#fbfeff!important;cursor:pointer}.diagram-option:has(input:checked){border-color:#278e9a!important;background:#ecf9f8!important}.diagram-option b{display:block;margin-bottom:6px}.diagram-option svg{display:block;width:100%;height:auto;max-height:122px}.diagram-option input{vertical-align:middle;margin-right:6px}@keyframes eq-reveal{from{opacity:.2;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:570px){.eq-inline{flex-wrap:wrap}.eq-explore{width:100%}.diagram-options{gap:6px}.diagram-option{padding:6px!important}.eq-question{flex-wrap:wrap}}
+@media(min-width:1030px){.circuit-section{position:sticky;top:10px}}@media(max-width:1060px){.layout{grid-template-columns:1fr}.circuit-section{position:static}.palette-tip{display:none}.reading-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:730px){body{padding:0}.shell{border:0;border-radius:0}.content{padding:9px}.topbar{padding:10px;flex-wrap:wrap}.brand{font-size:19px}.top-title{font-size:13px}.header-actions{margin-left:auto}.intro{display:block;font-size:12px}.stage{display:inline-block;margin-top:6px}.palette{gap:7px}.palette-label{width:100%;justify-content:flex-start}.tool{flex:1 1 44%;font-size:13px}.typebar{gap:8px}.type-title{width:100%}.type-choice{flex:1;justify-content:center}.circuit-area{padding:7px}.circuit-stage{padding:3px;min-height:270px}.svg-circuit{max-height:none}.reading-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.reading .readvalue{font-size:16px}.control{flex-wrap:wrap}.panel-head{font-size:13px}.modal-body{padding:12px}.q-card{padding:7px}.overlay{padding:7px}}
+@media(prefers-reduced-motion:reduce){.animated-flow{display:none!important}*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="topbar"><div class="header-left"><div class="brand"><span class="brand-mark" aria-hidden="true">ϟ</span> ElectroLab</div><div class="top-title">Nivel 2 · Circuitos en serie y paralelo</div></div><div class="header-actions"><button class="small-action" id="helpButton" type="button">? Ayuda</button><button class="small-action" id="resetButton" type="button">↻ Reiniciar</button></div></header>
+<main class="content">
+<div class="intro"><span><strong>Observa cómo cambia un circuito al conectar componentes en serie o en paralelo.</strong> Elige un tipo de circuito, coloca las piezas y realiza tus predicciones antes de medir.</span><span class="stage" id="stageLabel">Elegir conexión</span></div>
+<section class="typebar" aria-label="Seleccionar tipo de circuito"><span class="type-title">Primero elige el tipo de circuito:</span><button class="type-choice" data-type="series" id="seriesButton" aria-pressed="false" type="button"><span class="radio-mark" aria-hidden="true"></span> Serie</button><button class="type-choice" data-type="parallel" id="parallelButton" aria-pressed="false" type="button"><span class="radio-mark" aria-hidden="true"></span> Paralelo</button><span class="type-instruction">Puedes cambiar de conexión más adelante para comparar los mismos componentes.</span></section>
+<section class="palette" aria-label="Piezas del laboratorio"><div class="palette-label"><span class="step-one">1</span><span>Piezas del laboratorio</span></div>
+<button class="tool" draggable="true" data-piece="r1" aria-pressed="false" type="button"><span class="symbol">Ω₁</span> Resistor R₁</button>
+<button class="tool" draggable="true" data-piece="r2" aria-pressed="false" type="button"><span class="symbol">Ω₂</span> Resistor R₂</button>
+<button class="tool lamp" draggable="true" data-piece="l1" aria-pressed="false" type="button"><span class="symbol">💡</span> Lámpara L₁</button>
+<button class="tool lamp" draggable="true" data-piece="l2" aria-pressed="false" type="button"><span class="symbol">💡</span> Lámpara L₂</button>
+<div class="palette-tip">Arrastra una pieza al espacio 1 o 2. Para cambiarla, coloca otra encima. También puedes seleccionarla y pulsar el espacio.</div></section>
+<div class="layout"><section class="panel circuit-section" aria-labelledby="circuitTitle"><div class="panel-head"><span id="circuitTitle">⚡ Montaje del circuito</span><small id="mountStatus">Selecciona serie o paralelo</small></div><div class="circuit-area"><div class="circuit-stage"><svg id="svgCircuit" class="svg-circuit" viewBox="0 0 850 465" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Circuito con dos espacios para lámparas o resistores"></svg></div>
+<div class="circuit-actions"><button class="remove-btn" id="removeA" type="button" disabled>✕ Retirar pieza 1</button><button class="remove-btn" id="removeB" type="button" disabled>✕ Retirar pieza 2</button><span class="mount-pill" id="mountPill">Sin conexión elegida</span></div>
+<div class="reading-panel"><div class="reading-head">◉ Mediciones del circuito</div><div class="reading-grid">
+<div class="reading"><strong>Corriente total, Iₜ</strong><div class="readvalue pending" id="readTotal">— A</div></div>
+<div class="reading"><strong>Voltaje de la fuente, V</strong><div class="readvalue pending" id="readSource">— V</div></div>
+<div class="reading"><strong>Diferencia de potencial, V₁ / V₂</strong><div class="readvalue pending" id="readV12">— V</div></div>
+<div class="reading"><strong>Corriente en el elemento 1, I₁</strong><div class="readvalue pending" id="readI1">— A</div></div>
+<div class="reading"><strong>Corriente en el elemento 2, I₂</strong><div class="readvalue pending" id="readI2">— A</div></div>
+<div class="reading reading-equivalent"><strong>Resistencia equivalente, Rₑq</strong><div class="readvalue pending" id="readReq">— Ω</div><div class="eq-down-arrow" aria-hidden="true">↓</div><button id="equivalentButton" class="eq-explore" type="button" title="Explorar resistencia equivalente" disabled>Explorar resistencia equivalente</button></div>
+</div>
+<div class="reading-secondary" id="readingNote">Los valores se muestran cuando pulses «Medir». Una posición vacía significa una conexión abierta.</div>
+<details class="last-log"><summary>Ver registros de mediciones y comparación</summary><div id="logContainer">Todavía no has realizado mediciones.</div></details></div>
+<div class="circuit-footer"><span class="legend-pill">e⁻: electrones, del polo − al +</span><span class="legend-pill">Corriente convencional: del + al −</span><span class="legend-pill flow-legend">Paralelo: <b class="first">rama 1</b> y <b class="second">rama 2</b> usan colores para distinguir corrientes. Los flujos de las ramas se reúnen en un nodo; la frecuencia de puntos es orientativa.</span></div>
+</div></section>
+<aside class="panel controls"><div class="launchpad"><div class="launchpad-title">Cuando hayas elegido un circuito y colocado al menos una pieza:</div><button id="startButton" class="start-cta" type="button" disabled>▶ Comenzar</button></div><div class="panel-head"><span>⚙ Controles del laboratorio</span><small id="controlHint">Bloqueados hasta comenzar</small></div><div class="controls-body">
+<div class="control"><div class="ctrl-left"><span class="ctrl-icon">ϟ</span><div><h4>Voltaje de la fuente</h4><small>Fuente ideal de 3 a 12 V</small></div></div><div class="counter-line"><button class="smallstep" id="minusVoltage" type="button" aria-label="Disminuir voltaje" disabled>−</button><span class="voltage-val" id="voltageLabel">6 V</span><button class="smallstep" id="plusVoltage" type="button" aria-label="Aumentar voltaje" disabled>+</button></div></div>
+<div class="control"><div class="ctrl-left"><span class="ctrl-icon">Ω₁</span><div><h4>Valor del resistor R₁</h4><small>Cuando coloques R₁</small></div></div><select class="select-res" id="selectR1" aria-label="Valor en ohmios del resistor R1" disabled></select></div>
+<div class="control"><div class="ctrl-left"><span class="ctrl-icon">Ω₂</span><div><h4>Valor del resistor R₂</h4><small>Cuando coloques R₂</small></div></div><select class="select-res" id="selectR2" aria-label="Valor en ohmios del resistor R2" disabled></select></div>
+<div class="control"><div class="ctrl-left"><span class="ctrl-icon">e⁻</span><div><h4>Representación del flujo</h4><small>Dos sentidos, según el modelo</small></div></div><select class="mode-choice" id="flowMode" aria-label="Modo de visualización del flujo"><option value="electron">Electrones (− → +)</option><option value="conventional">Corriente (+ → −)</option></select></div>
+<div class="control"><div class="ctrl-left"><span class="ctrl-icon">◉</span><div><h4>Animar el flujo</h4><small>Es una representación, no velocidad real</small></div></div><button id="flowToggle" class="toggle" aria-pressed="true" aria-label="Activar o desactivar la animación del flujo" type="button"></button></div>
+<button id="measureButton" class="measure-cta" type="button" disabled><span class="measure-number">3</span> ◉ Medir</button>
+<div class="note" id="instruction" role="status" aria-live="polite"><strong>Primero:</strong> elige serie o paralelo y coloca una o dos piezas en los espacios.</div>
+<div class="lab-actions"><button class="secondary" type="button" id="newPredictionButton" disabled>↻ Nueva predicción</button><button class="secondary review-btn" type="button" id="reviewButton" disabled><span class="review-badge">4</span> Revisar mis predicciones</button></div>
+<button type="button" id="quizButton" class="quiz-button" disabled><span class="quiz-badge">5</span> Evalúo mis conocimientos</button><div class="quiz-status" id="quizStatus">Disponible al pulsar Comenzar.</div>
+<p class="smallprint">Modelo físico: fuente ideal de corriente continua, resistores óhmicos y lámparas aproximadas mediante resistencias fijas de 30 Ω. En lámparas reales, la resistencia cambia al calentarse. Si falta un componente en serie, la trayectoria queda abierta; en paralelo, la otra rama puede seguir funcionando. Los colores indican ramas, no distintos tipos de electrones.</p>
+</div></aside></div>
+<div class="note footer-note"><strong>Recorrido propuesto:</strong> elegir circuito → colocar piezas (paso 1) → <strong>Comenzar</strong> y predecir (paso 2; puedes cerrar las preguntas) → cambiar valores y <strong>Medir</strong> (paso 3) → revisar predicciones (paso 4, si las respondiste) → evaluación (paso 5). Para comparar, cambia entre serie y paralelo sin retirar las piezas. Para calcular Rₑq, utiliza «Explorar resistencia equivalente» después de medir.</div>
+</main></div>
+<div id="modalOverlay" class="overlay" hidden><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-head"><h2 id="modalTitle">ElectroLab</h2><button id="modalClose" class="close-modal" type="button" aria-label="Cerrar ventana">×</button></div><div class="modal-body" id="modalBody"></div></div></div>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const values=[15,20,25,30,40,50,60,75,100];
+const pieceLabels={r1:'Resistor R₁',r2:'Resistor R₂',l1:'Lámpara L₁',l2:'Lámpara L₂'};
+const state={type:null,slots:[null,null],selected:null,phase:'assembly',voltage:6,resistances:{r1:30,r2:30},flowMode:'electron',showFlow:true,reading:null,history:[],answers:null,predContext:null,lastQuizScore:null,measurementCount:0,eqRevealed:new Set()};
+let modalCallback=null;
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function fA(n){const decimals=Math.abs(n-Math.round(n*100)/100)<0.0005?2:3;return n.toFixed(decimals).replace('.',',')+' A'}
+function fV(n){return n.toFixed(2).replace('.',',')+' V'}
+function fOhm(n){return Number.isFinite(n)?n.toFixed(2).replace('.',',')+' Ω':'— Ω'}
+function h(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function isLamp(p){return p==='l1'||p==='l2'}
+function resistance(p){return p?isLamp(p)?30:state.resistances[p]:null}
+function ready(){return state.type!==null&&state.slots.some(Boolean)}
+function getModel(type=state.type,slots=state.slots,voltage=state.voltage,resistances=state.resistances){
+ const R=slots.map(p=>p?isLamp(p)?30:resistances[p]:null),connected=slots.map(Boolean);
+ let it=0,req=Infinity,branchI=[0,0],branchV=[null,null];
+ if(type==='series'){
+   if(connected.every(Boolean)){
+     req=R[0]+R[1];it=voltage/req;branchI=[it,it];branchV=[it*R[0],it*R[1]];
+   }else branchV=connected.map(x=>x?0:null);
+ }else if(type==='parallel'){
+   branchI=R.map(r=>r?voltage/r:0);branchV=R.map(r=>r===null?null:voltage);it=branchI[0]+branchI[1];req=it>0?voltage/it:Infinity;
+ }
+ return {type,slots:[...slots],voltage,R,connected,req,it,branchI,branchV,closed:it>0};
+}
+function showModal(title,body,onClose=null){modalCallback=onClose;$('modalTitle').textContent=title;$('modalBody').innerHTML=body;$('modalOverlay').hidden=false;$('modalClose').focus();}
+function closeModal(){if($('modalOverlay').hidden)return;$('modalOverlay').hidden=true;$('modalBody').innerHTML='';const fn=modalCallback;modalCallback=null;if(fn)fn();}
+$('modalClose').onclick=closeModal;
+$('modalOverlay').addEventListener('click',e=>{if(e.target===$('modalOverlay'))closeModal()});
+window.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('modalOverlay').hidden)closeModal()});
+
+function glowLight(p,v){if(!isLamp(p)||v===null)return 0;const power=v*v/30;return Math.min(1,power/1.8);}
+function drawLoad(p,x,y,mode,m,idx){
+ const slotTitle=`Espacio ${idx+1}`;
+ const val=m?m.branchV[idx]:null;
+ const glow=p?glowLight(p,val):0;
+ let content='';
+ if(!p){content=`<rect class="svg-slot" x="${x-57}" y="${y-53}" width="114" height="106" rx="16"/><text x="${x}" y="${y-3}" text-anchor="middle" class="svg-caption">Coloca</text><text x="${x}" y="${y+17}" text-anchor="middle" class="svg-caption-small">una pieza</text>`;}
+ else if(isLamp(p)){
+   // Lead wires join the circular lamp symbol to the gap endpoints, in both orientations.
+   const leads=mode==='series'?`M${x-55} ${y}H${x-29} M${x+29} ${y}H${x+55}`:`M${x} ${y-53}V${y-29} M${x} ${y+29}V${y+53}`;
+   content=`<path d="${leads}" class="svg-wire"/>
+   <circle cx="${x}" cy="${y-3}" r="${43+glow*11}" fill="#ffdd77" opacity="${(glow*.21).toFixed(2)}" class="svg-glow"/>
+   <circle cx="${x}" cy="${y}" r="29" fill="${glow>0.01?'#ffef9f':'#e4eef0'}" stroke="${glow>0.01?'#be9825':'#66868e'}" stroke-width="3.2"/>
+   <path d="M${x-10} ${y-7} Q${x} ${y+15} ${x+11} ${y-7}" fill="none" stroke="${glow>0?'#b98c1f':'#81969b'}" stroke-width="3"/>
+   <path d="M${x-10} ${y+29}H${x+10}" stroke="#567882" stroke-width="5" stroke-linecap="round"/>`;
+ } else {
+   content=mode==='series'
+   ?`<path d="M${x-55} ${y}H${x-33}L${x-22} ${y-18}L${x-10} ${y+18}L${x+2} ${y-18}L${x+14} ${y+18}L${x+26} ${y-18}L${x+37} ${y}H${x+55}" fill="none" stroke="#277b8b" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>`
+   :`<path d="M${x} ${y-53}V${y-36}L${x-18} ${y-25}L${x+18} ${y-13}L${x-18} ${y-1}L${x+18} ${y+11}L${x-18} ${y+23}L${x} ${y+36}V${y+53}" fill="none" stroke="#277b8b" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>`;
+ }
+ const text=p?(isLamp(p)?pieceLabels[p]+' (30 Ω)':pieceLabels[p]+' ('+resistance(p)+' Ω)'):'Pieza '+(idx+1);
+ return `<g class="svg-drop" data-slot="${idx}" tabindex="0" role="button" aria-label="${slotTitle}. ${p?h(pieceLabels[p]):'Vacío'}. Coloca aquí una pieza"><rect x="${x-61}" y="${y-58}" width="122" height="116" rx="16" fill="transparent"/>${content}<rect x="${x-61}" y="${y-58}" width="122" height="116" rx="16" fill="transparent"/></g>
+ <text x="${x}" y="${mode==='series'?211:358}" text-anchor="middle" class="svg-value">${h(text)}</text>`;
+}
+function flowDot(path,color,begin=0,label=true,dur=8){
+ const text=state.flowMode==='electron'?'e⁻':'I';
+ return `<g class="animated-flow"><circle r="10" class="flow-dot" fill="${color}"/><text dy="3.5" text-anchor="middle" class="flow-electron-label">${label?text:''}</text><animateMotion path="${path}" dur="${dur}s" begin="${begin}s" repeatCount="indefinite"/></g>`;
+}
+function flowGraphic(m){
+ if(!state.showFlow||!m.closed)return '';
+ const electron=state.flowMode==='electron';
+ if(m.type==='series'){
+  // All positions share the same current in series. Animation does not represent electron drift speed.
+  const path=electron?'M110 260 V383 H728 V118 H110 V221':'M110 221 V118 H728 V383 H110 V260';
+  const trace=`<path d="${path}" stroke="#17a6b1" stroke-opacity=".21" stroke-width="11" fill="none" stroke-linecap="round"/>`;
+  return `<g aria-hidden="true">${trace}${Array.from({length:5},(_,i)=>flowDot(path,'#139ca9',-i*1.6,i===0,8)).join('')}</g>`;
+ }
+ // Same electrical charge throughout: turquoise = common conductor, gold/violet = branch paths.
+ // More dots in a branch qualitatively represent a larger current, never different electron species.
+ const sharedPaths=electron?['M110 261 V382 H297','M297 120 H110 V221']:['M110 221 V120 H297','M297 382 H110 V261'];
+ let traces='',dots='';
+ const maxBranch=Math.max(...m.branchI,0.0001);
+ const totalCount=Math.max(2,Math.min(6,Math.round(4*m.it/maxBranch)));
+ for(const path of sharedPaths){
+  traces+=`<path d="${path}" stroke="#13a4b2" stroke-width="10" stroke-opacity=".20" fill="none" stroke-linecap="round"/>`;
+  for(let k=0;k<totalCount;k++)dots+=flowDot(path,'#149aa7',-k*(6/totalCount),k===0,6);
+ }
+ const branches=[{x:355,color:'#c99427',idx:0},{x:595,color:'#816dbb',idx:1}];
+ for(const br of branches){
+  if(!m.connected[br.idx])continue;
+  const path=electron?`M297 382 H${br.x} V120 H297`:`M297 120 H${br.x} V382 H297`;
+  const count=Math.max(1,Math.min(5,Math.round(4*m.branchI[br.idx]/maxBranch)));
+  traces+=`<path d="${path}" stroke="${br.color}" stroke-width="11" stroke-opacity=".23" fill="none" stroke-linecap="round"/>`;
+  for(let j=0;j<count;j++)dots+=flowDot(path,br.color,-j*(7/count),j===0,7);
+ }
+ return `<g aria-hidden="true">${traces}${dots}</g>`;
+}
+function renderCircuit(){
+ const m=getModel(),selected=state.type;
+ if(!selected){$('svgCircuit').innerHTML=`<rect x="12" y="15" width="825" height="430" rx="18" fill="#f6fcfd" stroke="#d7ecf0"/><circle cx="425" cy="184" r="75" fill="#eaf7f9" stroke="#b7dce1" stroke-width="4"/><text x="425" y="200" text-anchor="middle" font-size="63" fill="#4c9ca9" font-weight="900">?</text><text x="425" y="318" text-anchor="middle" font-size="25" fill="#2d6d7d" font-weight="850">Elige primero «Serie» o «Paralelo»</text><text x="425" y="357" text-anchor="middle" font-size="16" fill="#6b8b94">Después podrás arrastrar los componentes a los dos espacios.</text>`;return;}
+ const source=`<path class="svg-wire" d="M110 118 V221 M110 261 V383"/><path d="M75 231H149 M88 252H136" class="svg-wire"/><text class="svg-source" x="73" y="213">+</text><text class="svg-source" x="73" y="285">−</text><text class="svg-caption-small" x="44" y="341">${m.voltage} V</text><text class="svg-caption-small" x="44" y="360">Fuente CC</text>`;
+ const top=`<text x="31" y="45" class="svg-caption">${selected==='series'?'Circuito en serie':'Circuito en paralelo'}</text><text x="31" y="68" class="svg-caption-small">Fuente ideal ${m.voltage} V · ${m.closed?'Hay trayectoria conductora':'Hay conexión abierta'}</text>`;
+ let wires='',loads='';
+ if(selected==='series'){
+  wires=`<path class="svg-wire" d="M110 118 H295 M405 118 H490 M600 118 H728 V383 H110"/>`;
+  loads=drawLoad(state.slots[0],350,118,'series',m,0)+drawLoad(state.slots[1],545,118,'series',m,1);
+ }else{
+  wires=`<path class="svg-wire" d="M110 118 H704 M110 383 H704 M355 118 V197 M355 302 V383 M595 118 V197 M595 302 V383"/>`;
+  loads=drawLoad(state.slots[0],355,249,'parallel',m,0)+drawLoad(state.slots[1],595,249,'parallel',m,1);
+  wires+=`<circle cx="355" cy="118" r="7" fill="#286b7b"/><circle cx="595" cy="118" r="7" fill="#286b7b"/><circle cx="355" cy="383" r="7" fill="#286b7b"/><circle cx="595" cy="383" r="7" fill="#286b7b"/>`;
+ }
+ const colors=selected==='series'?`<text x="670" y="448" class="svg-legend">Iₜ = I₁ = I₂</text>`:`<text x="620" y="448" class="svg-legend">Iₜ = I₁ + I₂</text>`;
+ $('svgCircuit').innerHTML=`<defs><pattern id="gridMini" width="27" height="27" patternUnits="userSpaceOnUse"><path d="M27 0H0V27" fill="none" stroke="#e2f0f2" stroke-width="1"/></pattern></defs><rect x="9" y="9" width="833" height="445" rx="13" fill="url(#gridMini)" opacity=".68"/>${top}${source}${wires}${flowGraphic(m)}${loads}${colors}`;
+ for(const el of $('svgCircuit').querySelectorAll('.svg-drop')){
+   el.addEventListener('click',()=>tryPlace(state.selected,Number(el.dataset.slot)));
+   el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tryPlace(state.selected,Number(el.dataset.slot));}});
+   el.addEventListener('dragover',e=>{e.preventDefault();e.dataTransfer.dropEffect='copy'});
+   el.addEventListener('drop',e=>{e.preventDefault();tryPlace(e.dataTransfer.getData('text/plain')||state.selected,Number(el.dataset.slot));});
+ }
+}
+function updateFlow(){renderCircuit();}
+function renderStatus(){
+ const m=getModel(),experiment=state.phase!=='assembly';
+ $('seriesButton').classList.toggle('active',state.type==='series');$('parallelButton').classList.toggle('active',state.type==='parallel');
+ for(const b of [ $('seriesButton'),$('parallelButton') ])b.setAttribute('aria-pressed',String(b.dataset.type===state.type));
+ for(const b of document.querySelectorAll('.tool')){b.setAttribute('aria-pressed',String(b.dataset.piece===state.selected));b.classList.toggle('is-placed',state.slots.includes(b.dataset.piece));}
+ $('stageLabel').textContent=state.type===null?'Elegir conexión':state.phase==='assembly'?'1 · Armar el circuito':state.phase==='prediction'?'2 · Predicciones':state.phase==='review'?'4 · Revisar ideas':'3 · Experimentar';
+ $('mountStatus').textContent=state.type===null?'Selecciona serie o paralelo':`${state.type==='series'?'Serie':'Paralelo'} · ${state.slots.filter(Boolean).length} de 2 espacios ocupados`;
+ $('mountPill').textContent=state.type===null?'Sin conexión elegida':m.closed?'Trayectoria conductora ✓':'Trayectoria abierta';
+ $('removeA').disabled=!state.slots[0];$('removeB').disabled=!state.slots[1];
+ $('startButton').disabled=experiment||!ready();
+ $('minusVoltage').disabled=!experiment||state.voltage<=3;$('plusVoltage').disabled=!experiment||state.voltage>=12;
+ $('selectR1').disabled=!experiment||!state.slots.includes('r1');$('selectR2').disabled=!experiment||!state.slots.includes('r2');
+ $('selectR1').value=String(state.resistances.r1);$('selectR2').value=String(state.resistances.r2);
+ $('voltageLabel').textContent=state.voltage+' V';
+ $('measureButton').disabled=!experiment||!ready();$('newPredictionButton').disabled=!experiment||!ready();$('equivalentButton').disabled=!experiment||state.reading===null;
+ $('reviewButton').disabled=!experiment||!state.answers||state.history.length<=state.predContext?.historyAtStart;
+ $('quizButton').disabled=!experiment;$('quizStatus').textContent=state.lastQuizScore===null?(experiment?'Disponible ahora; puedes usarla al final o como prefiera el docente.':'Disponible al pulsar Comenzar.'):`Último resultado: ${state.lastQuizScore}/6. Puedes repetir la evaluación.`;
+ $('controlHint').textContent=experiment?'Activos: experimenta libremente':'Bloqueados hasta comenzar';
+ $('flowToggle').setAttribute('aria-pressed',String(state.showFlow));$('flowMode').value=state.flowMode;
+ const hasReading=state.reading!==null;const reading=state.reading;
+ for(const id of ['readTotal','readReq','readSource','readI1','readI2','readV12'])$(id).classList.toggle('pending',!hasReading);
+ $('readTotal').textContent=hasReading?fA(reading.it):'— A';const knownEq=hasReading&&state.eqRevealed.has(reading.id);$('readReq').textContent=hasReading?(knownEq?(Number.isFinite(reading.req)?fOhm(reading.req):'Abierto'):'¿? Ω'):'— Ω';$('readReq').classList.toggle('pending',!knownEq);$('readSource').textContent=hasReading?reading.voltage.toFixed(1).replace('.',',')+' V':'— V';
+ $('readI1').textContent=hasReading?reading.connected[0]?fA(reading.branchI[0]):'Sin pieza':'— A';$('readI2').textContent=hasReading?reading.connected[1]?fA(reading.branchI[1]):'Sin pieza':'— A';
+ $('readV12').textContent=hasReading?reading.branchV.map(v=>v===null?'—':v.toFixed(1).replace('.',',')).join(' / ')+' V':'— V';
+ $('readingNote').textContent=hasReading?`${reading.type==='series'?'Serie':'Paralelo'}: ${reading.closed?'circuito conductor':'hay una trayectoria abierta'}. ${reading.type==='series'?'La corriente solo circula si ambas posiciones están ocupadas.':'Una rama puede conducir aunque la otra esté vacía.'}`:'Los valores aparecerán cuando pulses «Medir»; una posición vacía representa una conexión abierta.';
+ if(!experiment)$('instruction').innerHTML=ready()?'<strong>Montaje listo.</strong> Pulsa <strong>Comenzar</strong>. Aparecerán las preguntas de predicción y podrás cerrarlas para experimentar directamente.':'<strong>Paso 1:</strong> selecciona serie o paralelo y arrastra al menos una lámpara o resistor a un espacio.';
+ else $('instruction').innerHTML=state.history.length===0?'<strong>Experimenta:</strong> prueba a medir con una pieza y con dos. Observa qué ocurre si cambias entre serie y paralelo.':'<strong>Continúa:</strong> ya puedes comparar la corriente total, las corrientes por pieza y la resistencia equivalente; cambia valores o la conexión y vuelve a medir.';
+ updateHistory();renderCircuit();
+}
+function updateHistory(){
+ const rows=state.history.slice(-8).reverse();
+ if(!rows.length){$('logContainer').innerHTML='Todavía no has realizado mediciones.';return;}
+ $('logContainer').innerHTML=`<table class="log-table"><thead><tr><th>Tipo</th><th>Piezas</th><th>V</th><th>Iₜ</th><th>Rₑq</th></tr></thead><tbody>${rows.map(m=>`<tr><td>${m.type==='series'?'Serie':'Paralelo'}</td><td>${m.slots.map(p=>p?h(pieceLabels[p]):'vacío').join(' / ')}</td><td>${m.voltage} V</td><td>${fA(m.it)}</td><td>${state.eqRevealed.has(m.id)?(Number.isFinite(m.req)?fOhm(m.req):'Abierto'):'Por calcular'}</td></tr>`).join('')}</tbody></table>`;
+}
+function changeType(t){state.type=t;state.reading=null;renderStatus();}
+function selectPiece(p){state.selected=state.selected===p?null:p;renderStatus();}
+function tryPlace(p,slot){
+ if(!state.type){showModal('Primero elige una conexión','<p>Selecciona <strong>Serie</strong> o <strong>Paralelo</strong> en la parte superior.</p>');return;}
+ if(!p||!pieceLabels[p]){showModal('Elige una pieza','<p>Selecciona o arrastra un resistor o una lámpara y colócalo en el espacio 1 o 2.</p>');return;}
+ const idx=state.slots.indexOf(p);if(idx!==-1&&idx!==slot)state.slots[idx]=null;
+ state.slots[slot]=p;state.reading=null;renderStatus();
+}
+function removePiece(idx){state.slots[idx]=null;state.reading=null;renderStatus();}
+for(const b of document.querySelectorAll('.type-choice'))b.onclick=()=>changeType(b.dataset.type);
+for(const b of document.querySelectorAll('.tool')){
+ b.addEventListener('click',()=>selectPiece(b.dataset.piece));
+ b.addEventListener('dragstart',e=>{state.selected=b.dataset.piece;e.dataTransfer.setData('text/plain',b.dataset.piece);e.dataTransfer.effectAllowed='copy';});
+ b.addEventListener('dragend',()=>renderStatus());
+}
+$('removeA').onclick=()=>removePiece(0);$('removeB').onclick=()=>removePiece(1);
+for(const r of values){$('selectR1').insertAdjacentHTML('beforeend',`<option value="${r}">${r} Ω</option>`);$('selectR2').insertAdjacentHTML('beforeend',`<option value="${r}">${r} Ω</option>`);}
+$('minusVoltage').onclick=()=>{state.voltage=Math.max(3,state.voltage-1);state.reading=null;renderStatus()};
+$('plusVoltage').onclick=()=>{state.voltage=Math.min(12,state.voltage+1);state.reading=null;renderStatus()};
+$('selectR1').onchange=e=>{state.resistances.r1=Number(e.target.value);state.reading=null;renderStatus()};
+$('selectR2').onchange=e=>{state.resistances.r2=Number(e.target.value);state.reading=null;renderStatus()};
+$('flowMode').onchange=e=>{state.flowMode=e.target.value;renderStatus()};
+$('flowToggle').onclick=()=>{state.showFlow=!state.showFlow;renderStatus()};
+function beginExperiment(){state.phase='experiment';state.reading=null;renderStatus()}
+$('startButton').onclick=()=>{if(!ready())return;state.phase='prediction';state.predContext={type:state.type,slots:[...state.slots],voltage:state.voltage,resistances:{...state.resistances},historyAtStart:state.history.length};renderStatus();openPrediction();};
+$('newPredictionButton').onclick=()=>{if(!ready())return;state.phase='prediction';state.predContext={type:state.type,slots:[...state.slots],voltage:state.voltage,resistances:{...state.resistances},historyAtStart:state.history.length};state.answers=null;renderStatus();openPrediction();};
+function predictionQuestions(){
+ const ctx=state.predContext;const m=getModel(ctx.type,ctx.slots,ctx.voltage,ctx.resistances),type=ctx.type;
+ const full=m.connected.every(Boolean);const one=m.connected.filter(Boolean).length===1;
+ // Answer codes are stable even when options are shuffled.
+ const q1=type==='series'?{q:'Si una de las dos posiciones queda vacía, ¿puede circular corriente por el circuito?',opts:[['no','No: el único camino queda abierto.'],['yes','Sí: la corriente puede saltar el espacio vacío.'],['half','Sí: solo circula por la pieza instalada.']],correct:'no',why:'En serie hay una sola trayectoria. Una abertura interrumpe la circulación sostenida de corriente.'}:
+ {q:'Si en paralelo colocas una lámpara en una rama y dejas la otra vacía, ¿qué ocurrirá?',opts:[['light','La lámpara colocada puede encenderse porque su rama está cerrada.'],['dark','Ninguna lámpara puede encenderse hasta ocupar las dos ramas.'],['both','La corriente circulará por la rama que está vacía.']],correct:'light',why:'En paralelo cada rama constituye una trayectoria propia entre los terminales de la fuente.'};
+ const q2=type==='series'?{q:'Cuando hay dos componentes conectados en serie y el circuito está cerrado, la corriente que pasa por cada uno...',opts:[['same','Es la misma en ambos componentes.'],['split','Se divide en dos corrientes diferentes.'],['used','Se consume al llegar al segundo componente.']],correct:'same',why:'En una trayectoria única y en régimen estacionario, la corriente es igual a lo largo del recorrido.'}:
+ {q:'Si ambas ramas de un circuito en paralelo están conectadas a la misma fuente ideal, ¿cómo es el voltaje en cada rama?',opts:[['same','Es el mismo en ambas ramas.'],['half','Siempre se divide exactamente por la mitad.'],['none','La segunda rama no recibe voltaje.']],correct:'same',why:'Los extremos de cada rama en paralelo están conectados a los mismos dos nodos de la fuente.'};
+ // La tercera predicción se adapta a si el estudiante colocó una o dos piezas.
+ const q3=type==='series'
+  ?(full
+    ?{q:'Si retiras una de las dos piezas del circuito en serie, ¿qué ocurrirá con la corriente?',opts:[['stop','Se interrumpirá la corriente en todo el circuito.'],['other1','Seguirá circulando por la pieza restante.'],['up','Aumentará al faltar una resistencia.'],['other','Tengo otra idea.']],correct:'stop',why:'Al retirar cualquier pieza se abre la única trayectoria en serie; por tanto, la corriente total es cero.'}
+    :{q:'Si colocas otra pieza en el espacio libre y completas el circuito en serie, ¿qué sucederá?',opts:[['flow','Podrá circular corriente por las dos piezas.'],['none','No circulará corriente porque hay dos piezas.'],['half','Solo circulará por la pieza que colocaste primero.'],['other','Tengo otra idea.']],correct:'flow',why:'Al cerrar la trayectoria de la fuente, la corriente atraviesa todos los componentes en serie.'})
+  :(full
+    ?{q:'Si retiras una rama de este circuito en paralelo, ¿qué pasará con la corriente de la rama que sigue conectada?',opts:[['maintain','Se mantendrá si la fuente ideal y su resistencia no cambian.'],['stop','Se volverá cero porque falta la otra rama.'],['double','Se duplicará porque recibe toda la corriente.'],['other','Tengo otra idea.']],correct:'maintain',why:'La rama restante sigue conectada al mismo voltaje; la corriente total de la fuente disminuye, pero la de esa rama no cambia.'}
+    :{q:'Si agregas una segunda rama con una carga y mantienes el mismo voltaje, la corriente total de la fuente...',opts:[['up','Aumentará.'],['down','Disminuirá.'],['same','Será siempre igual.'],['other','Tengo otra idea.']],correct:'up',why:'La nueva rama conectada aporta corriente adicional: Iₜ = I₁ + I₂.'});
+ const expected=m.it;
+ const candidates=expected===0?[0,ctx.voltage/30,ctx.voltage/60]:[expected,expected/2,expected*2];
+ const q4={q:`Con el montaje actual (${m.connected.map((on,i)=>on?pieceLabels[ctx.slots[i]]:'espacio vacío').join(' y ')}) y ${ctx.voltage} V, ¿qué corriente total esperas medir?`,opts:candidates.map((v,i)=>[String(i),fA(v)]),correct:'0',why:expected===0?'El circuito en serie está abierto: no circula corriente.':'La corriente total se calcula a partir de la resistencia equivalente, aplicando I = V/Rₑq.'};
+ return [q1,q2,q3,q4];
+}
+function openPrediction(){
+ const qs=predictionQuestions();
+ let content=`<div class="prediction-heading"><span class="num">2</span><div><strong>Predice antes de medir</strong><small>Estas preguntas no se califican. Se guardan para compararlas con las mediciones. Puedes cerrar esta ventana con × para experimentar sin contestarlas.</small></div></div>
+ <p>Trabajarás con un circuito <strong>${state.predContext.type==='series'?'en serie':'en paralelo'}</strong> y una fuente de <strong>${state.predContext.voltage} V</strong>. Observa cuántas piezas has colocado.</p>`;
+ qs.forEach((q,i)=>{content+=`<fieldset class="q-card"><legend>${i+1}. ${h(q.q)}</legend>${shuffle(q.opts).map(o=>`<label><input type="radio" name="p${i}" value="${h(o[0])}"> ${h(o[1])}</label>`).join('')}${i===2?'<textarea id="otherIdea" hidden maxlength="250" placeholder="Escribe tu idea (opcional)"></textarea>':''}</fieldset>`;});
+ content+=`<div id="predictError" class="error" aria-live="polite"></div><div class="modal-actions"><button class="hint" id="hintButton" type="button">💡 Pista</button><button class="primary" id="saveButton" type="button">Guardar y experimentar →</button></div><div class="hint-box" id="hintText" hidden>Para analizar un circuito, sigue los caminos conductores: en serie hay uno solo; en paralelo hay ramas independientes. Recuerda <strong>I = V/R</strong>.</div>`;
+ showModal('Paso 2 · Mis predicciones',content,()=>{if(state.phase==='prediction')beginExperiment()});
+ $('hintButton').onclick=()=>{$('hintText').hidden=!$('hintText').hidden};
+ const opts=document.querySelectorAll('input[name="p2"]');for(const x of opts)x.addEventListener('change',()=>{$('otherIdea').hidden=document.querySelector('input[name="p2"]:checked')?.value!=='other'});
+ $('saveButton').onclick=()=>{
+  const sel=qs.map((q,i)=>document.querySelector(`input[name="p${i}"]:checked`)?.value);
+  if(sel.some(x=>!x)){$('predictError').textContent='Responde las cuatro preguntas o cierra la ventana para ir directamente al laboratorio.';return;}
+  state.answers=sel.map((ans,i)=>({answer:ans,question:qs[i]}));state.answers[2].other=sel[2]==='other'?$('otherIdea').value.slice(0,250):'';
+  beginExperiment();closeModal();renderStatus();
+ };
+}
+$('measureButton').onclick=()=>{
+ if(state.phase==='assembly'||state.phase==='prediction'||!ready())return;
+ const m=getModel();state.measurementCount++;state.reading={...m,id:state.measurementCount,when:state.history.length+1};state.history.push(state.reading);renderStatus();
+};
+$('reviewButton').onclick=()=>{
+ if(!state.answers||state.history.length<=state.predContext?.historyAtStart)return;
+ state.phase='review';renderStatus();
+ const ctx=state.predContext;
+ const baseline=state.history.find(m=>m.type===ctx.type&&m.voltage===ctx.voltage&&m.slots.every((p,i)=>p===ctx.slots[i])&&m.slots.every(p=>!p||isLamp(p)||m.R[m.slots.indexOf(p)]===ctx.resistances[p]));
+ let body=`<div class="prediction-heading"><span class="num">4</span><div><strong>Revisa tus predicciones</strong><small>Compara tus ideas iniciales con las observaciones. El objetivo es explicar, no solamente acertar.</small></div></div>`;
+ body+=baseline?`<p><b>Medición del montaje inicial:</b> ${fA(baseline.it)} con ${baseline.voltage} V. Puedes contrastarla con la corriente que habías previsto.</p>`:`<p class="hint-box"><b>Para contrastar los números:</b> todavía no has medido exactamente el montaje y los valores usados al responder las predicciones. Puedes regresar a ese montaje y medirlo; las explicaciones de abajo se refieren a la situación inicial.</p>`;
+ for(let i=0;i<state.answers.length;i++){
+  const {question:q,answer:a}=state.answers[i];const option=q.opts.find(v=>v[0]===a);const correct=q.opts.find(v=>v[0]===q.correct);
+  body+=`<div class="result-card ${a===q.correct?'':'wrong'}"><strong>${i+1}. ${h(q.q)}</strong><p><b>Tu respuesta:</b> ${h(option?option[1]:a)}${a==='other'&&state.answers[i].other?' — '+h(state.answers[i].other):''}</p><p><b>Respuesta física:</b> ${h(correct[1])}</p><p>${h(q.why)}</p></div>`;
+ }
+ body+='<p><strong>Reflexiona:</strong> ¿qué cambió entre tu predicción y los valores que registraste? Si vas a usar la guía del estudiante, escribe allí una explicación breve.</p><div class="modal-actions"><button class="primary" id="closeReview" type="button">Volver al laboratorio</button></div>';
+ showModal('Paso 4 · Revisar mis predicciones',body);$('closeReview').onclick=closeModal;
+};
+function eqComponent(p,x,y,vertical){
+ const R=resistance(p);
+ if(!p)return vertical
+ ?`<rect x="${x-25}" y="${y-34}" width="50" height="68" rx="10" fill="none" stroke="#8cbfc9" stroke-width="2" stroke-dasharray="5 5"/>`
+ :`<rect x="${x-43}" y="${y-20}" width="86" height="40" rx="9" fill="none" stroke="#8cbfc9" stroke-width="2" stroke-dasharray="5 5"/>`;
+ const lamp=isLamp(p);
+ const shape=lamp
+ ?`<circle cx="${x}" cy="${y}" r="21" fill="#fff5be" stroke="#bb9839" stroke-width="3"/><path d="M${x-13} ${y-13}L${x+13} ${y+13} M${x+13} ${y-13}L${x-13} ${y+13}" stroke="#ba9229" stroke-width="2.4"/>`
+ :vertical
+ ?`<path d="M${x} ${y-30}L${x-11} ${y-20}L${x+11} ${y-10}L${x-11} ${y}L${x+11} ${y+10}L${x-11} ${y+20}L${x} ${y+30}" fill="none" stroke="#247f8b" stroke-width="4" stroke-linejoin="round"/>`
+ :`<path d="M${x-40} ${y}L${x-28} ${y-12}L${x-14} ${y+12}L${x} ${y-12}L${x+14} ${y+12}L${x+28} ${y-12}L${x+40} ${y}" fill="none" stroke="#247f8b" stroke-width="4" stroke-linejoin="round"/>`;
+ const label=`${lamp?'L':'R'}${p.slice(1)} = ${R} Ω`;
+ return shape+`<text x="${x}" y="${vertical?y+53:y-33}" font-size="12" fill="#275b6b" text-anchor="middle" font-weight="750">${label}</text>`;
+}
+function eqDiagram(m,equivalent=false){
+ // Models only the externally equivalent two-terminal circuit; ideal source and R_eq.
+ const base=`<g fill="none" stroke="#286f7f" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M65 55V92 M65 129V178"/><path d="M30 99H100 M42 121H88"/></g><text x="23" y="89" font-size="18" fill="#245a69" font-weight="900">+</text><text x="23" y="149" font-size="18" fill="#245a69" font-weight="900">−</text><text x="20" y="173" font-size="11" fill="#67838a">${m.voltage} V</text>`;
+ let wires='',pieces='';
+ if(equivalent){
+  wires='<path d="M65 55H215 M305 55H425V178H65"/>';
+  pieces=`<path d="M215 55L226 43L240 67L254 43L268 67L282 43L295 55H305" fill="none" stroke="#267c88" stroke-width="4" stroke-linejoin="round"/><text x="260" y="29" text-anchor="middle" font-size="15" fill="#206a78" font-weight="900">Rₑq = ${m.req.toFixed(2).replace('.',',')} Ω</text>`;
+ }else if(m.type==='series'){
+  wires='<path d="M65 55H150 M230 55H300 M380 55H425V178H65"/>';
+  pieces=eqComponent(m.slots[0],190,55,false)+eqComponent(m.slots[1],340,55,false);
+ }else{
+  wires='<path d="M65 55H425 M65 178H425 M200 55V82 M200 148V178 M345 55V82 M345 148V178"/>';
+  pieces=eqComponent(m.slots[0],200,115,true)+eqComponent(m.slots[1],345,115,true);
+ }
+ return `<svg viewBox="0 0 470 205" role="img" aria-label="${equivalent?'Circuito equivalente con un solo resistor':'Circuito original de '+(m.type==='series'?'serie':'paralelo')}"><rect width="470" height="205" fill="transparent"/>${base}<g fill="none" stroke="#286f7f" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">${wires}</g>${pieces}</svg>`;
+}
+function eqFormula(m){
+ if(!Number.isFinite(m.req))return 'Una posición vacía deja abierta la única trayectoria en serie: I = 0 A. No existe una resistencia equivalente finita que reproduzca este circuito abierto.';
+ if(m.type==='series')return `En serie: Rₑq = R₁ + R₂ = ${m.R[0]} + ${m.R[1]} = ${fOhm(m.req)}.`;
+ if(m.connected.filter(Boolean).length===1){const r=m.R.find(Number.isFinite);return `Solo una rama está conectada: Rₑq = ${r} Ω. La rama abierta no aporta corriente.`;}
+ return `En paralelo: 1/Rₑq = 1/${m.R[0]} + 1/${m.R[1]}; por tanto, Rₑq = (${m.R[0]} × ${m.R[1]}) / (${m.R[0]} + ${m.R[1]}) = ${fOhm(m.req)}.`;
+}
+function openEquivalent(){
+ if(!state.reading)return;
+ const m=state.reading;
+ const isOpen=!Number.isFinite(m.req);
+ const original=eqDiagram(m,false);
+ let body=`<div class="prediction-heading"><span class="num" style="background:linear-gradient(120deg,#a77b21,#d8a64b)">Ω</span><div><strong>Explora la resistencia equivalente</strong><small>Actividad del paso 3 · después de medir · puedes cerrar con ×.</small></div></div>
+ <div class="eq-diagram-wrap"><div class="eq-diagram-title" id="eqDiagramTitle">Circuito que acabas de medir</div><div id="eqDiagram">${original}</div></div>`;
+ if(isOpen){
+  body+=`<p><strong>Piensa:</strong> en serie hay una posición vacía. ¿Puede circular corriente por el circuito?</p><div class="eq-question"><label><input type="radio" name="eqopen" value="no"/> No, está abierto.</label><label><input type="radio" name="eqopen" value="yes"/> Sí, circula normalmente.</label></div><div id="eqFeedback" class="eq-error" aria-live="polite"></div><div class="modal-actions"><button class="primary" id="eqCheckOpen">Comprobar</button></div><div id="eqWork" hidden class="eq-work"></div>`;
+ }else{
+  body+=`<div class="eq-question"><label for="eqInput">¿Cuánto vale Rₑq?</label><input id="eqInput" class="eq-entry" type="text" inputmode="decimal" autocomplete="off" placeholder="Ej. 15" maxlength="12" aria-label="Resistencia equivalente en ohmios"/><strong>Ω</strong><button class="primary" id="eqCheck" type="button">Comprobar</button></div><div id="eqFeedback" class="eq-error" aria-live="polite"></div><div id="eqWork" hidden class="eq-work"></div>`;
+ }
+ showModal('Resistencia equivalente',body);
+ const reveal=()=>{
+  state.eqRevealed.add(m.id);
+  $('eqDiagramTitle').textContent=isOpen?'Circuito abierto: no hay paso de corriente':'Circuito equivalente con una sola resistencia';
+  $('eqDiagram').innerHTML=isOpen?original:eqDiagram(m,true);
+  $('eqWork').hidden=false;
+  $('eqWork').innerHTML=`<div class="eq-formula">${h(eqFormula(m))}</div><p><b>Corriente total medida:</b> ${fA(m.it)}. ${isOpen?'La trayectoria sigue abierta.':'El circuito equivalente mantiene la misma corriente total con la misma fuente; no muestra las corrientes internas de cada rama. Prueba quitar una rama paralela y volver a calcular.'}</p><div class="modal-actions"><button class="secondary" type="button" id="eqOriginal">Ver circuito original</button><button class="primary" type="button" id="eqReturn">Volver al laboratorio</button></div>`;
+  $('eqOriginal').onclick=()=>{$('eqDiagram').innerHTML=original;$('eqDiagramTitle').textContent='Circuito original';};
+  $('eqReturn').onclick=()=>{closeModal();renderStatus();};
+  renderStatus();
+ };
+ if(isOpen){
+  $('eqCheckOpen').onclick=()=>{const answer=document.querySelector('input[name="eqopen"]:checked');if(!answer){$('eqFeedback').textContent='Elige una respuesta.';return;}if(answer.value!=='no'){$('eqFeedback').textContent='Revisa la abertura: no existe un camino cerrado en serie.';return;}$('eqFeedback').textContent='¡Correcto!';reveal();};
+ }else{
+  let attempts=0;
+  $('eqCheck').onclick=()=>{
+   const raw=$('eqInput').value.trim().replace(',','.');const proposed=Number(raw);
+   if(!raw||!Number.isFinite(proposed)||proposed<=0){$('eqFeedback').textContent='Escribe un valor positivo en ohmios.';return;}
+   if(Math.abs(proposed-m.req)<=Math.max(.02,m.req*.001)){$('eqFeedback').textContent='¡Bien! Tu cálculo coincide con la medición.';reveal();return;}
+   attempts++;
+   $('eqFeedback').textContent=attempts===1?'Todavía no coincide. Piensa cómo se combinan las resistencias en esta conexión.':'Puedes intentarlo otra vez o consultar el cálculo explicado.';
+   if(attempts>=2 && !$('eqSolve')){
+    const btn=document.createElement('button');btn.id='eqSolve';btn.className='secondary';btn.textContent='Ver desarrollo y transformación';btn.type='button';btn.onclick=reveal;$('eqWork').before(btn);
+   }
+  };
+  $('eqInput').onkeydown=e=>{if(e.key==='Enter')$('eqCheck').click()};
+ }
+}
+$('equivalentButton').onclick=openEquivalent;
+const questions=[
+ {q:'Observa los dos circuitos sin nombres. ¿Cuál muestra dos resistores conectados en paralelo?',visual:true,opts:[['series','Diagrama de serie'],['parallel','Diagrama de paralelo']],ok:'parallel',why:'En paralelo los dos resistores están conectados entre los mismos dos nodos, formando ramas; no importa si el dibujo está orientado de otra forma.'},
+ {q:'Si retiras una lámpara y dejas un espacio abierto en un circuito de dos lámparas en serie, ¿qué ocurrirá?',opts:[['dark','Se apagarán ambas porque el camino queda abierto.'],['lit','La lámpara que queda continuará encendida.'],['half','Solo se reducirá el voltaje de la otra.']],ok:'dark',why:'Al abrirse cualquier punto de la única trayectoria, deja de circular corriente.'},
+ {q:'¿Qué ocurre con una lámpara de una rama paralela cuando la otra rama se deja abierta?',opts:[['works','Puede permanecer encendida, si su propia rama está cerrada.'],['fails','Se apaga obligatoriamente.'],['double','Siempre recibe el doble de voltaje.']],ok:'works',why:'Las ramas en paralelo son caminos independientes conectados a los mismos nodos.'},
+ {q:'En un circuito en serie cerrado, la corriente que pasa por el primer resistor y por el segundo...',opts:[['same','Tiene el mismo valor.'],['different','Siempre es mayor en el primero.'],['consumed','Se consume al atravesar el primero.']],ok:'same',why:'En serie no hay ramificaciones, por lo que la intensidad es la misma en todos los elementos.'},
+ {q:'Si conectamos dos resistores iguales de 30 Ω a una fuente de 6 V, ¿cuál configuración permite mayor corriente total?',opts:[['parallel','En paralelo, porque la resistencia equivalente es menor.'],['series','En serie, porque se suman las resistencias.'],['equal','Las dos producen la misma corriente total.']],ok:'parallel',why:'Serie: Rₑq=60 Ω, Iₜ=0,10 A. Paralelo: Rₑq=15 Ω, Iₜ=0,40 A.'},
+ {q:'Hay dos resistores conectados en paralelo a una fuente ideal. Si retiras uno y mantienes el otro, ¿qué ocurre con la resistencia equivalente del conjunto?',opts:[['increases','Aumenta, porque queda una sola rama conductora.'],['decreases','Disminuye, porque ahora hay menos resistores.'],['same','Permanece siempre igual.']],ok:'increases',why:'Al retirar una rama paralela disminuye la conductancia total: la resistencia equivalente aumenta. La corriente de la rama que queda no cambia si se mantiene el voltaje de la fuente ideal.'}
+];
+$('quizButton').onclick=()=>{
+ if(state.phase==='assembly')return;
+ let content=`<div class="prediction-heading"><span class="num" style="background:linear-gradient(120deg,#bf8c37,#dbac5f)">5</span><div><strong>Evalúo mis conocimientos</strong><small>Seis preguntas · 1 punto cada una · Alternativas mezcladas en cada intento.</small></div></div>`;
+ questions.forEach((q,i)=>{
+ if(q.visual){
+  const opts=shuffle(['series','parallel']);
+  const draw=kind=>{const series=kind==='series';
+   const wires=series?'<path d="M24 28H72 M108 28H146 M182 28H204V100H24V64"/>':'<path d="M24 28H161 M24 100H161 M92 28V45 M92 83V100 M161 28V45 M161 83V100"/>';
+   const r=series?'<path d="M72 28l6-9 8 18 8-18 8 18 6-9 M146 28l6-9 8 18 8-18 8 18 6-9"/>':'<path d="M92 45l-8 6 16 7-16 7 16 7-8 11 M161 45l-8 6 16 7-16 7 16 7-8 11"/>';
+   return `<svg viewBox="0 0 225 115" role="img" aria-label="Esquema eléctrico sin identificar"><g fill="none" stroke="#297989" stroke-width="3.1" stroke-linejoin="round" stroke-linecap="round">${wires}${r}<path d="M24 28V45 M24 64V100 M7 49H41 M12 60H36"/></g><text x="5" y="43" font-size="12" fill="#355e6a">+</text><text x="5" y="75" font-size="12" fill="#355e6a">−</text></svg>`;
+  };
+  content+=`<fieldset class="q-card"><legend>${i+1}. ${h(q.q)}</legend><div class="diagram-options">${opts.map((kind,j)=>`<label class="diagram-option"><b><input type="radio" name="quiz${i}" value="${kind}"> Opción ${j===0?'A':'B'}</b>${draw(kind)}</label>`).join('')}</div></fieldset>`;
+ }else content+=`<fieldset class="q-card"><legend>${i+1}. ${h(q.q)}</legend>${shuffle(q.opts).map(o=>`<label><input type="radio" name="quiz${i}" value="${o[0]}"> ${h(o[1])}</label>`).join('')}</fieldset>`;
+});
+ content+='<div class="error" id="quizError"></div><div class="modal-actions"><button class="primary" id="gradeQuiz">Calificar mis respuestas</button></div>';
+ showModal('Paso 5 · Evaluación',content);
+ $('gradeQuiz').onclick=()=>{
+  const answers=questions.map((q,i)=>document.querySelector(`input[name="quiz${i}"]:checked`)?.value);
+  if(answers.some(v=>!v)){$('quizError').textContent='Responde las seis preguntas para conocer tu puntaje.';return;}
+  const points=questions.reduce((acc,q,i)=>acc+(answers[i]===q.ok?1:0),0);state.lastQuizScore=points;
+  let results=`<div class="score">Resultado: ${points} / 6 · ${Math.round(points/6*100)} %</div><p>Revisa cada respuesta y vuelve a intentarlo si lo deseas.</p>`;
+  results+=questions.map((q,i)=>{const chosen=q.opts.find(o=>o[0]===answers[i])[1],correct=q.opts.find(o=>o[0]===q.ok)[1];return `<div class="result-card ${answers[i]===q.ok?'':'wrong'}"><strong>${i+1}. ${h(q.q)}</strong><p><b>Tu respuesta:</b> ${h(chosen)}</p>${answers[i]!==q.ok?`<p><b>Correcta:</b> ${h(correct)}</p>`:''}<p>${h(q.why)}</p></div>`;}).join('');
+  results+='<div class="modal-actions"><button class="secondary" id="retryQuiz">Repetir evaluación</button><button class="primary" id="finishQuiz">Volver al laboratorio</button></div>';
+  showModal('Resultado de la evaluación',results);$('retryQuiz').onclick=()=>{$('quizButton').click()};$('finishQuiz').onclick=closeModal;renderStatus();
+ };
+};
+$('helpButton').onclick=()=>showModal('Cómo usar ElectroLab - Nivel 2',`<p><b>1.</b> Elige serie o paralelo. <b>2.</b> Arrastra una o dos piezas a los espacios. <b>3.</b> Pulsa Comenzar; responde las predicciones o cierra la ventana para experimentar libremente. <b>4.</b> Modifica los valores y pulsa Medir. <b>5.</b> Revisa y evalúa tus conocimientos.</p><p><b>Para comprobar la diferencia con las lámparas:</b> coloca L₁ en una sola posición. En serie estará apagada porque queda un espacio abierto; en paralelo puede encenderse. Después coloca L₂.</p><p><b>Resistencia equivalente:</b> después de medir, abre «Explorar resistencia equivalente» en el recuadro amarillo, calcula y observa cómo se sustituye el montaje por un solo resistor. No es posible una resistencia equivalente finita si el circuito serie está abierto.</p><p>Los electrones (− → +) se representan en sentido opuesto al de la corriente convencional (+ → −). En paralelo, los colores diferencian ramas y las partículas indican corrientes relativas de manera orientativa, no distintos tipos de carga.</p>`);
+$('resetButton').onclick=()=>{state.type=null;state.slots=[null,null];state.selected=null;state.phase='assembly';state.voltage=6;state.resistances={r1:30,r2:30};state.flowMode='electron';state.showFlow=true;state.reading=null;state.history=[];state.answers=null;state.predContext=null;state.lastQuizScore=null;state.measurementCount=0;state.eqRevealed=new Set();closeModal();renderStatus()};
+renderStatus();
+</script>
+</body>
+</html>
