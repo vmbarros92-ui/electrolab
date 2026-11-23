@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ElectroLab · Nivel 3 · Circuitos mixtos</title>
+<style>
+:root{--petrol:#276e7c;--petrol-dark:#1a5665;--petrol-light:#3e95a2;--teal:#188d87;--ink:#1c3b48;--muted:#627e87;--cloud:#eef7f9;--paper:#fff;--border:#b9dde4;--gold:#f9e2a3;--gold-deep:#e4b34e;--coral:#c05b55;--amber:#c99427;--violet:#806ebf;--cyan:#13a4b2}
+*{box-sizing:border-box}body{margin:0;padding:8px;background:linear-gradient(#edf7f9,#e3f1f4);color:var(--ink);font:15px/1.45 'Segoe UI',Arial,sans-serif}button,select,input,textarea{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.48;filter:saturate(.45)}:focus-visible{outline:3px solid #e9aa42;outline-offset:2px}
+.shell{max-width:1400px;margin:0 auto;background:#f9fdfe;border:2px solid #a8d7de;border-radius:18px;overflow:hidden;box-shadow:0 7px 28px #194e6020}
+.topbar{min-height:60px;padding:10px 17px;background:linear-gradient(100deg,#1d5969,#2a7e8a);color:white;display:flex;align-items:center;justify-content:space-between;gap:10px}.header-left{display:flex;align-items:center;gap:14px;min-width:0}.brand{font-size:23px;font-weight:900;letter-spacing:-.5px;display:flex;align-items:center;gap:8px;white-space:nowrap}.brand-mark{width:34px;height:34px;display:inline-grid;place-items:center;border:2px solid #c6f8ef;border-radius:10px;color:#e7c258}.top-title{font-size:17px;font-weight:760;border-left:2px solid #8cc3cc;padding-left:16px}.header-actions{display:flex;gap:8px}.small-action{background:#ffffff22;border:1px solid #a1d6de99;padding:7px 11px;border-radius:9px;color:#fff;font-weight:750}.small-action:hover{background:#ffffff33}
+.content{padding:16px}.intro{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 0 14px;color:#35616d;font-size:14px}.intro strong{color:#1a596a}.stage{flex:0 0 auto;border:1px solid #b9e3e6;border-radius:12px;background:#e0f5f3;color:#257181;font-weight:800;padding:9px 14px}
+.typebar{border:2px solid #a8d2d9;border-radius:15px;padding:12px 14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:linear-gradient(90deg,#e7f3f6,#f4fbfb);margin-bottom:13px}.type-title{font-size:17px;font-weight:850;margin-right:7px}.type-choice{display:inline-flex;align-items:center;gap:9px;border:2px solid #b4d8df;background:white;color:#285d6d;border-radius:11px;min-height:46px;padding:9px 17px;font-weight:850}.type-choice.active{background:linear-gradient(105deg,#d5f3eb,#b7e7e2);border-color:#37aaa1;box-shadow:0 0 0 2px #62c3b31e}.type-choice .radio-mark{width:18px;height:18px;border-radius:50%;border:2px solid #318c96;display:inline-grid;place-items:center}.type-choice.active .radio-mark:after{content:'';width:9px;height:9px;background:#1a8f89;border-radius:50%}.type-instruction{margin-left:auto;font-size:12px;color:#537985;max-width:340px}
+.palette{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 13px;background:linear-gradient(105deg,#fff1ce,#fcfcf4,#e6f5f6);border:1px solid #e9d08d;border-radius:15px;margin-bottom:13px}.palette-label{display:flex;align-items:center;gap:9px;font-weight:850;background:linear-gradient(110deg,#ffe5a1,#ffefc2);border:1px solid #ebcc7d;border-radius:12px;padding:7px 11px 7px 6px;white-space:nowrap}.step-one{background:linear-gradient(145deg,#18818c,#2a98a2);font-size:28px;color:#fff;width:51px;height:51px;display:grid;place-items:center;border-radius:11px;box-shadow:0 4px 10px #19788d38}.tool{min-height:48px;border:2px solid #b4d9e0;background:white;color:#28596b;border-radius:12px;display:flex;align-items:center;gap:8px;padding:7px 11px;font-weight:780;box-shadow:0 2px 0 #1e6d7b10}.tool:hover{background:#f1fafb;border-color:#55abb7}.tool[aria-pressed="true"]{background:#d9f5ef;border-color:#19a395;box-shadow:0 0 0 2px #2b9e9820}.tool .symbol{min-width:36px;height:31px;border:2px solid #6eb5bf;border-radius:9px;background:#e6f6f8;display:grid;place-items:center;font-size:17px;font-weight:900}.tool.lamp .symbol{color:#b17d15;border-color:#e5cb7a;background:#fff5d8}.tool.is-placed{border-color:#8ac7bf}.palette-tip{margin-left:auto;font-size:12px;color:#647982;line-height:1.3;max-width:220px}
+.layout{display:grid;grid-template-columns:minmax(0,1.68fr) minmax(322px,.9fr);gap:14px;align-items:stretch}.panel{border:1px solid #b5d8df;background:white;border-radius:17px;overflow:hidden;box-shadow:0 2px 7px #2363740a}.panel-head{background:linear-gradient(100deg,#246c7b,#3e8c97);min-height:47px;display:flex;align-items:center;justify-content:space-between;padding:11px 15px;color:white;gap:9px;font-weight:850}.panel-head small{font-size:11px;font-weight:600;color:#e6f6f7;text-align:right}
+.circuit-section{align-self:start}.circuit-area{padding:14px;background:linear-gradient(#fcfeff,#f4fbfc)}.circuit-stage{border:1px solid #d7ebee;background:radial-gradient(circle at 45% 40%,white,#f1f9fa);border-radius:14px;padding:9px;min-height:384px;display:flex;flex-direction:column;justify-content:center}.svg-circuit{width:100%;height:auto;display:block;max-height:435px}.svg-wire{stroke:#24697b;stroke-width:6;fill:none;stroke-linecap:round;stroke-linejoin:round}.svg-source{font-size:23px;font-weight:900;fill:#245b6a}.svg-caption{font-size:16px;font-weight:780;fill:#275e6a}.svg-caption-small{font-size:13px;fill:#647f88;font-weight:600}.svg-slot{fill:#f4fcfe;stroke:#77bfcd;stroke-width:3;stroke-dasharray:6 5}.svg-slot.filled{fill:#f0fbf8;stroke:#79cbb5;stroke-dasharray:0}.svg-value{fill:#2b6577;font-size:14px;font-weight:780}.svg-glow{transition:opacity .15s}.svg-hot{fill:#fbdf5c}.svg-legend{font-size:13px;fill:#617f88}.svg-drop{cursor:pointer}.svg-drop:hover .svg-slot{stroke:#e0b848;stroke-width:4}
+.circuit-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:11px 2px 4px}.remove-btn{background:#edf7f9;color:#226d7c;border:1px solid #b4dce2;border-radius:9px;font-weight:750;font-size:12px;padding:9px 11px}.remove-btn:hover:not(:disabled){background:#dff1f4}.mount-pill{background:#edf9f6;border:1px solid #b9e3d8;border-radius:999px;padding:8px 10px;color:#237c76;font-size:12px;font-weight:850;margin-left:auto}
+.reading-panel{margin:12px 0 5px;padding:12px;background:linear-gradient(110deg,#fff0b9,#fff7df 55%,#e9f7f4);border:1px solid #dfc36a;border-radius:15px;box-shadow:0 3px 10px #aa892b18}.reading-head{font-size:16px;color:#74591d;font-weight:900;margin-bottom:10px}.reading-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.reading{background:#fffefa;border:1px solid #ecdca5;border-radius:10px;display:flex;flex-direction:column;padding:10px;gap:6px;min-width:0}.reading strong{color:#5f4a26;font-size:12px}.readvalue{background:linear-gradient(100deg,#21899a,#3baea2);color:white;border-radius:8px;text-align:center;padding:7px 4px;font-size:18px;font-weight:900;font-variant-numeric:tabular-nums;white-space:nowrap}.readvalue.pending{background:#e0ebed;color:#70868c}
+
+.reading-secondary{font-size:11px;color:#637e86;margin-top:8px}.last-log{border-top:1px solid #efdba4;margin-top:12px;padding-top:9px}.last-log summary{font-weight:800;color:#6c5526;cursor:pointer}.log-table{width:100%;border-collapse:collapse;font-size:11px;margin-top:7px}.log-table td,.log-table th{border:1px solid #dccda8;padding:5px;text-align:center}.log-table th{background:#fff2d0}.circuit-footer{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}.legend-pill{border:1px solid #c6e5e9;border-radius:999px;background:#eff9fa;color:#597a84;font-size:11px;padding:6px 8px}.flow-legend .first{color:#a6780f}.flow-legend .second{color:#7560ad}
+.controls{display:flex;flex-direction:column}.launchpad{margin:12px 12px 0;padding:10px;background:#eef7f9;border:1px solid #c9e4e8;border-radius:12px}.launchpad-title{font-size:13px;font-weight:850;margin-bottom:8px;color:#25606e}.start-cta{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:60px;border:2px solid #b85956;border-radius:12px;color:#fff;background:linear-gradient(120deg,#bc655d,#ca7970);font-size:22px;font-weight:900}.start-cta:hover:not(:disabled){background:#b4554e}.controls>.panel-head{margin-top:13px}.controls-body{padding:12px;display:flex;flex-direction:column;gap:10px}.control{background:#fbfefe;border:1px solid #d1e8eb;border-radius:12px;padding:11px;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:62px}.control h4{margin:0;font-size:14px;font-weight:850}.control small{font-size:11px;color:#6e8a93;display:block}.ctrl-left{display:flex;gap:8px;align-items:center;min-width:0}.ctrl-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:9px;background:#e2f1f4;color:#2c7f8d;flex:none;font-size:19px}.counter-line{display:flex;gap:5px;align-items:center}.smallstep{background:#21869a;color:white;border:0;border-radius:9px;padding:5px;width:35px;height:35px;font-size:20px;font-weight:900}.voltage-val{min-width:43px;text-align:center;font-weight:900}.select-res{background:#fff;border:1px solid #b6d9e1;border-radius:8px;padding:7px 4px;color:#245e6f;font-weight:800;width:90px}.select-res:disabled{opacity:.5}.mode-choice{background:#fff;border:1px solid #b9dbe2;border-radius:9px;padding:8px;color:#2b6777;font-size:12px;max-width:175px}.toggle{display:inline-flex;border-radius:99px;width:53px;height:30px;position:relative;border:2px solid #bad1d6;background:#b3c8cd}.toggle:after{content:'';position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:white;box-shadow:0 2px 4px #0003;transition:.18s}.toggle[aria-pressed=true]{background:#51bba8;border-color:#4eb9ae}.toggle[aria-pressed=true]:after{transform:translateX(23px)}.measure-cta{display:flex;justify-content:center;align-items:center;gap:13px;width:100%;min-height:73px;background:linear-gradient(110deg,#177f7a,#22a79f);border:2px solid #147e7b;border-radius:13px;color:white;font-size:22px;font-weight:900}.measure-number{display:grid;place-items:center;width:46px;height:46px;border-radius:11px;border:2px solid #e4fffa;font-size:27px}.note{border:1px solid #e7d08a;background:linear-gradient(110deg,#fff2c0,#fff9e8 62%,#e8f6f5);color:#655123;border-radius:11px;padding:12px;font-size:14px;line-height:1.42}.note strong{color:#79571d}.lab-actions{display:grid;grid-template-columns:1fr;gap:8px}.secondary{background:#f2fafb;border:1px solid #a9d1d8;border-radius:11px;color:#24687b;font-weight:800;min-height:47px;padding:10px 12px}.secondary:hover:not(:disabled){background:#e0f2f5}.review-badge{display:inline-grid;place-items:center;border:2px solid currentColor;border-radius:10px;width:35px;height:35px;font-size:22px;font-weight:900;margin-right:6px}.review-btn{font-size:17px;min-height:58px}.quiz-button{width:100%;display:flex;gap:10px;justify-content:center;align-items:center;background:linear-gradient(110deg,#f8e6bb,#fff3d6);border:2px solid #e2c17d;border-radius:12px;color:#705421;min-height:58px;font-size:17px;font-weight:850}.quiz-badge{display:grid;place-items:center;background:#bc842b;color:#fff;font-size:25px;width:37px;height:37px;border-radius:10px}.quiz-status{color:#866d3f;font-size:11px;text-align:center;padding:4px}.smallprint{font-size:11px;color:#647f87;margin:4px 0 0;line-height:1.45}
+.footer-note{margin-top:13px}
+.overlay[hidden]{display:none!important}.overlay{position:fixed;inset:0;z-index:40;background:rgba(12,42,54,.69);padding:18px;display:flex;align-items:center;justify-content:center}.modal{background:#fff;color:var(--ink);border-radius:17px;width:min(780px,100%);max-height:92vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 25px 80px #001c2850;border:2px solid #aad9e1}.modal-head{background:linear-gradient(105deg,#1b5868,#2b8190);color:white;display:flex;align-items:center;justify-content:space-between;padding:13px 18px;gap:10px}.modal-head h2{font-size:20px;margin:0}.close-modal{background:#ffffff25;color:#fff;border:1px solid #c0e6ed;border-radius:8px;font-size:23px;width:37px;height:37px;line-height:1}.modal-body{padding:16px 20px;overflow:auto}.prediction-heading{display:flex;align-items:center;gap:14px;background:linear-gradient(100deg,#eef8fa,#fcfefe);border:1px solid #b6d7e0;border-radius:12px;padding:12px;margin:0 0 12px}.prediction-heading .num{width:67px;height:67px;display:grid;place-items:center;font-size:42px;color:#fff;background:linear-gradient(120deg,#2a8290,#48abb1);border-radius:14px;font-weight:950}.prediction-heading strong{display:block;font-size:20px}.prediction-heading small{color:#66838c}.q-card{border:1px solid #d1e6e9;border-radius:12px;margin:13px 0;padding:12px 13px;background:#fcfefe}.q-card legend{font-weight:900;padding:0 6px;max-width:100%;color:#285d6d}.q-card label{display:flex;align-items:flex-start;gap:10px;border-radius:8px;padding:8px 9px;margin:4px 0;cursor:pointer;background:#f4f9fa}.q-card label:hover{background:#e3f3f5}.q-card input[type=radio]{margin-top:3px;accent-color:#218b94}.q-card textarea{width:100%;margin-top:7px;border:1px solid #b8d9e0;border-radius:8px;padding:8px;min-height:62px}.modal-actions{display:flex;gap:9px;flex-wrap:wrap;justify-content:flex-end;margin-top:14px}.modal-actions button{min-height:45px;padding:10px 15px;border-radius:9px;font-weight:800}.primary{background:#1d8a8f;border:1px solid #14757f;color:white}.hint{background:#ffe187;color:#5b440d;border:1px solid #d1ac40}.hint-box{background:#fff8da;border:1px solid #e7c96b;border-radius:9px;padding:11px;font-size:13px;margin:12px 0}.error{color:#a23e37;font-weight:800;min-height:20px}.results-table{border-collapse:collapse;width:100%;font-size:13px;margin:10px 0}.results-table th,.results-table td{border:1px solid #c6dade;text-align:left;padding:8px}.results-table th{background:#eaf5f7}.table-scroll{overflow-x:auto;max-width:100%}.table-scroll .results-table{min-width:570px}.result-card{padding:11px;border-radius:9px;border-left:4px solid #36a697;background:#f1faf7;margin:9px 0}.result-card.wrong{background:#fff6ee;border-color:#ce9a57}.result-card p{margin:5px 0 0}.score{font-size:31px;font-weight:950;color:#236d77;text-align:center;border-radius:12px;background:#e7f7f4;padding:16px;border:1px solid #b8e2d9}
+.flow-dot{stroke:#fff;stroke-width:2}.flow-electron-label{fill:white;font-weight:850;font-size:9px}.flow-legend-text{font-size:13px;fill:#637c85}.branch1{color:#c18a23}.branch2{color:#836fbf}.animated-flow{pointer-events:none}
+/* R equivalente: activity sits inside the existing readings rather than lengthening the page. */
+.eq-inline{display:flex;align-items:center;justify-content:space-between;gap:11px;margin-top:10px;padding:10px 11px;background:linear-gradient(110deg,#fffdf6,#e6f5f3);border:1px solid #e0c985;border-radius:11px}.eq-inline-copy{display:flex;flex-direction:column;min-width:0}.eq-inline-copy strong{font-size:14px;color:#66511d}.eq-inline-copy small{font-size:11px;color:#647a81}.eq-explore{flex:0 0 auto;border:1px solid #248f90;border-radius:10px;padding:10px 14px;background:linear-gradient(115deg,#287e8d,#3ea59b);color:#fff;font-weight:850;font-size:13px}.eq-explore:hover:not(:disabled){filter:brightness(1.07)}
+/* Zona de resistencia equivalente integrada en la sexta tarjeta de medición. */
+.reading-equivalent{gap:3px;padding:8px;background:linear-gradient(165deg,#fffefa,#fff6d9);border-color:#dabd70}
+.reading-equivalent .readvalue{margin-bottom:0}
+.eq-down-arrow{font-weight:950;font-size:17px;line-height:10px;align-self:center;color:#98631a;margin:0}
+.reading-equivalent .eq-explore{display:block;flex:none;width:100%;min-height:38px;padding:5px 7px;border:2px solid #98501f;background:linear-gradient(115deg,#bc6d24,#a9512c);color:#fff;font-weight:900;font-size:12px;line-height:1.13;text-align:center;white-space:normal;border-radius:10px;box-shadow:0 3px 0 rgba(100,61,30,.17)}
+.reading-equivalent .eq-explore:hover:not(:disabled){background:linear-gradient(115deg,#a95c1e,#934326);transform:translateY(-1px)}
+.reading-equivalent .eq-explore:focus-visible{outline:3px solid #185e6b;outline-offset:2px}
+.reading-equivalent .eq-explore:disabled{opacity:.55;box-shadow:none;cursor:not-allowed}
+.eq-diagram-wrap{border:1px solid #d3e7e9;border-radius:12px;background:linear-gradient(#fbfefe,#eef8f9);padding:9px;text-align:center}.eq-diagram-wrap svg{width:100%;height:auto;max-height:210px;display:block;margin:0 auto}.eq-diagram-title{font-size:12px;font-weight:900;color:#286877;margin-bottom:4px}.eq-question{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:#fff7dc;border:1px solid #e7d18b;border-radius:12px;padding:11px;margin:10px 0}.eq-question label{font-weight:800}.eq-entry{width:100px;border:2px solid #a7cdd5;border-radius:8px;padding:8px 10px;font-weight:850;text-align:center;min-height:42px}.eq-work{background:#eff9f8;border:1px solid #b8ddd9;border-radius:11px;padding:12px;margin-top:10px;animation:eq-reveal .28s ease-out}.eq-work svg{width:100%;max-height:210px}.eq-formula{font-weight:850;font-size:15px;color:#275b6b;margin:6px 0}.eq-error{color:#a34d30;font-weight:800;min-height:19px;font-size:13px}.diagram-options{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:7px 0}.diagram-option{display:block!important;border:2px solid #c8e0e5!important;border-radius:12px!important;padding:11px!important;background:#fbfeff!important;cursor:pointer}.diagram-option:has(input:checked){border-color:#278e9a!important;background:#ecf9f8!important}.diagram-option b{display:block;margin-bottom:6px}.diagram-option svg{display:block;width:100%;height:auto;max-height:122px}.diagram-option input{vertical-align:middle;margin-right:6px}@keyframes eq-reveal{from{opacity:.2;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:570px){.eq-inline{flex-wrap:wrap}.eq-explore{width:100%}.diagram-options{gap:6px}.diagram-option{padding:6px!important}.eq-question{flex-wrap:wrap}}
+@media(min-width:1030px){.circuit-section{position:sticky;top:10px}}@media(max-width:1060px){.layout{grid-template-columns:1fr}.circuit-section{position:static}.palette-tip{display:none}.reading-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:730px){body{padding:0}.shell{border:0;border-radius:0}.content{padding:9px}.topbar{padding:10px;flex-wrap:wrap}.brand{font-size:19px}.top-title{font-size:13px}.header-actions{margin-left:auto}.intro{display:block;font-size:12px}.stage{display:inline-block;margin-top:6px}.palette{gap:7px}.palette-label{width:100%;justify-content:flex-start}.tool{flex:1 1 44%;font-size:13px}.typebar{gap:8px}.type-title{width:100%}.type-choice{flex:1;justify-content:center}.circuit-area{padding:7px}.circuit-stage{padding:3px;min-height:270px}.svg-circuit{max-height:none}.reading-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.reading .readvalue{font-size:16px}.control{flex-wrap:wrap}.panel-head{font-size:13px}.modal-body{padding:12px}.q-card{padding:7px}.overlay{padding:7px}}
+@media(prefers-reduced-motion:reduce){.animated-flow{display:none!important}*{scroll-behavior:auto!important;transition:none!important}}
+
+/* Nivel 3: mantiene paneles, dimensiones y jerarquía del Nivel 2. */
+.challenge-guide{border:2px solid #dfb35a;border-radius:12px;background:linear-gradient(105deg,#fff1c9,#fffaf0 70%,#e9f6f4);padding:11px 12px;display:flex;align-items:center;justify-content:space-between;gap:9px;min-height:65px;box-shadow:0 3px 10px #bc973626}
+.challenge-copy{display:flex;flex-direction:column;min-width:0}.challenge-copy strong{font-size:14px;color:#675018}.challenge-copy small{font-size:12px;color:#5d5c49;line-height:1.4}
+.challenge-cta{font-size:12px;font-weight:850;border:1px solid #268c92;border-radius:9px;padding:8px 10px;min-height:36px;white-space:normal;background:#298a92;color:white;max-width:135px;flex:0 0 auto}.challenge-cta:hover:not(:disabled){background:#227b83}
+@media(max-width:570px){.challenge-guide{flex-wrap:wrap}}
+.palette-tip{max-width:280px}
+.branch-action{border:1px solid #d1e8eb;border-radius:12px;background:#fbfefe;padding:10px 11px;display:flex;gap:9px;align-items:center;justify-content:space-between}
+.branch-action .branch-btn{border:1px solid #3c92a0;background:#e9f6f7;color:#236778;border-radius:9px;padding:8px 11px;font-size:12px;font-weight:850;min-height:36px}
+.branch-action .branch-btn.opened{background:#f7e9e7;color:#924740;border-color:#e8b5b0}
+.readvalue.pair{font-size:15px}
+.status-delta{background:#f1faf8;border:1px solid #c5e6db;border-radius:9px;padding:8px 10px;color:#216c70;font-size:12px;font-weight:750;margin-top:8px}
+.status-delta .up{color:#177d61}.status-delta .down{color:#b4524b}
+.svg-separation{stroke:#bd5450;stroke-width:4.5;stroke-linecap:round;fill:none}
+.svg-label-open{fill:#b85c50;font-weight:900;font-size:15px}
+.branch-flows{pointer-events:none}
+.light-icon{display:grid;place-items:center;font-size:25px}
+.mode-label{font-size:12px;color:#60808a;font-weight:750}
+.q-card .sub-note{font-size:12px;color:#66838c;margin-top:6px}
+@media(max-width:1060px){.palette-tip{display:none}}
+@media(max-width:570px){.readvalue.pair{font-size:14px}.branch-action{align-items:flex-start}.branch-action .branch-btn{font-size:11px}}
+
+/* Nivel 3 V4: controles compactos y medidores individuales. */
+.typebar{gap:8px;padding:9px 12px}.typebar .type-title{font-size:14px;margin-right:0;white-space:nowrap}.typebar .type-choice{padding:7px 11px;min-height:41px;font-size:13px}.type-separator{height:27px;width:1px;background:#b8dce2;margin:0 5px}.palette-tip{max-width:none;flex:1;min-width:220px;text-align:right}.palette .tool{min-width:142px;justify-content:center}.read-pair{display:flex;align-items:center;justify-content:space-between;gap:7px}.read-pair>span{flex:0 0 19px;font-size:12px;font-weight:900;color:#64757a}.read-pair .readvalue{flex:1;min-width:0;font-size:15px;padding:5px 4px}.reading-caption{color:#7b8582;font-size:10px;margin-top:5px}.reading{gap:5px}.reading .readvalue{font-size:16px}.reading-equivalent .readvalue{font-size:17px}.typebar .type-choice{white-space:nowrap}
+@media(max-width:730px){.typebar .type-title{width:auto;min-width:95px}.type-separator{display:none}.palette-tip{display:block!important;text-align:left;width:100%;flex-basis:100%}.read-pair .readvalue{font-size:14px}}
+</style></head>
+<body>
+<div class="shell">
+<header class="topbar"><div class="header-left"><div class="brand"><span class="brand-mark" aria-hidden="true">ϟ</span> ElectroLab</div><div class="top-title">Nivel 3 · Circuitos mixtos</div></div><div class="header-actions"><button class="small-action" id="helpButton" type="button">? Ayuda</button><button class="small-action" id="resetButton" type="button">↻ Reiniciar</button></div></header>
+<main class="content">
+<div class="intro"><span><strong>¿Qué ocurre al cambiar una parte del circuito?</strong> Elige un circuito mixto, coloca las cargas y compara los resultados.</span><span class="stage" id="stageLabel">Elegir circuito y piezas</span></div>
+<section class="typebar" aria-label="Configuración del laboratorio">
+ <span class="type-title">Tipo de circuito:</span>
+ <button class="type-choice circuit-choice" data-topology="A" type="button" aria-pressed="false"><span class="radio-mark" aria-hidden="true"></span> Mixto 1</button>
+ <button class="type-choice circuit-choice" data-topology="B" type="button" aria-pressed="false"><span class="radio-mark" aria-hidden="true"></span> Mixto 2</button>
+ <span class="type-separator" aria-hidden="true"></span><span class="type-title">Componentes:</span>
+ <button class="type-choice mode-choice-btn" data-mode="resistor" id="resistorButton" type="button" aria-pressed="false"><span class="radio-mark" aria-hidden="true"></span> Resistores</button>
+ <button class="type-choice mode-choice-btn" data-mode="lamp" id="lampButton" type="button" aria-pressed="false"><span class="radio-mark" aria-hidden="true"></span> Lámparas</button>
+</section>
+<section class="palette" aria-label="Piezas del laboratorio"><div class="palette-label"><span class="step-one">1</span><span>Piezas del laboratorio</span></div>
+ <button class="tool" id="pieceTool" draggable="true" data-piece="piece" type="button" aria-pressed="false"><span class="symbol">Ω</span><span>Resistor</span></button>
+ <div class="palette-tip" id="paletteTip">Elige circuito y componentes. Arrastra una misma pieza hasta tres veces, en el orden que prefieras.</div>
+</section>
+<div class="layout">
+<section class="panel circuit-section" aria-labelledby="circuitTitle"><div class="panel-head"><span id="circuitTitle">⚡ Montaje del circuito mixto</span><small id="mountStatus">Elige circuito y componentes</small></div>
+<div class="circuit-area"><div class="circuit-stage"><svg id="svgCircuit" class="svg-circuit" viewBox="0 0 850 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Circuito mixto: un elemento en serie y dos elementos en ramas paralelas"></svg></div>
+<div class="circuit-actions"><button class="remove-btn" id="remove0" type="button" disabled>✕ Retirar 1</button><button class="remove-btn" id="remove1" type="button" disabled>✕ Retirar 2</button><button class="remove-btn" id="remove2" type="button" disabled>✕ Retirar 3</button><span class="mount-pill" id="mountPill">Sin montaje</span></div>
+<div class="reading-panel"><div class="reading-head">◉ Mediciones del circuito</div><div class="reading-grid">
+ <div class="reading"><strong>Fuente · valores totales</strong><div class="read-pair"><span>Iₜ</span><div class="readvalue pending" id="readTotal">— A</div></div><div class="read-pair"><span>Vₜ</span><div class="readvalue pending" id="readSourceVoltage">— V</div></div></div>
+ <div class="reading"><strong>Elemento 1 · <span class="labelPiece1">R₁</span></strong><div class="read-pair"><span>I₁</span><div class="readvalue pending" id="readI1">— A</div></div><div class="read-pair"><span>V₁</span><div class="readvalue pending" id="readV1">— V</div></div></div>
+ <div class="reading"><strong>Elemento 2 · <span class="labelPiece2">R₂</span></strong><div class="read-pair"><span>I₂</span><div class="readvalue pending" id="readI2">— A</div></div><div class="read-pair"><span>V₂</span><div class="readvalue pending" id="readV2">— V</div></div></div>
+ <div class="reading"><strong>Elemento 3 · <span class="labelPiece3">R₃</span></strong><div class="read-pair"><span>I₃</span><div class="readvalue pending" id="readI3">— A</div></div><div class="read-pair"><span>V₃</span><div class="readvalue pending" id="readV3">— V</div></div></div>
+ <div class="reading"><strong>Potencia total</strong><div class="readvalue pending" id="readPower">— W</div><small class="reading-caption">Potencia entregada por la fuente</small></div>
+ <div class="reading reading-equivalent"><strong>Resistencia equivalente · Rₑq</strong><div class="readvalue pending" id="readReq">— Ω</div><div class="eq-down-arrow" aria-hidden="true">↓</div><button id="equivalentButton" class="eq-explore" type="button" disabled>Explorar resistencia equivalente</button></div>
+</div>
+<div class="reading-secondary" id="readingNote">Los valores se mostrarán al pulsar «Medir».</div>
+<div id="changeSummary" class="status-delta" hidden></div>
+<details class="last-log"><summary>Ver mediciones y comparación</summary><div id="logContainer">Todavía no hay mediciones.</div></details>
+</div>
+<div class="circuit-footer"><span class="legend-pill">e⁻: del polo − al +</span><span class="legend-pill">Corriente convencional: + a −</span><span class="legend-pill flow-legend">Ramas: <b class="first">amarillo</b> y <b class="second">violeta</b> desde el nodo</span></div>
+</div></section>
+<aside class="panel controls"><div class="launchpad"><div class="launchpad-title">Cuando hayas colocado las piezas:</div><button id="startButton" class="start-cta" type="button" disabled>▶ Comenzar</button></div><div class="panel-head"><span>⚙ Controles del laboratorio</span><small id="controlHint">Bloqueados hasta comenzar</small></div><div class="controls-body">
+<div class="control"><div class="ctrl-left"><span class="ctrl-icon">ϟ</span><div><h4>Voltaje de la fuente</h4><small>Fuente ideal de 3 a 24 V</small></div></div><div class="counter-line"><button id="minusVoltage" class="smallstep" type="button" aria-label="Disminuir voltaje" disabled>−</button><span id="voltageLabel" class="voltage-val">9 V</span><button id="plusVoltage" class="smallstep" type="button" aria-label="Aumentar voltaje" disabled>+</button></div></div>
+<div class="control"><div class="ctrl-left"><span class="ctrl-icon">Ω₁</span><div><h4>Valor de <span class="labelPiece1">R₁</span></h4><small>Según el circuito elegido</small></div></div><select id="selectR0" class="select-res" aria-label="Resistencia 1 en ohmios" disabled></select></div>
+<div class="control"><div class="ctrl-left"><span class="ctrl-icon">Ω₂</span><div><h4>Valor de <span class="labelPiece2">R₂</span></h4><small>Según el circuito elegido</small></div></div><select id="selectR1" class="select-res" aria-label="Resistencia 2 en ohmios" disabled></select></div>
+<div class="control"><div class="ctrl-left"><span class="ctrl-icon">Ω₃</span><div><h4>Valor de <span class="labelPiece3">R₃</span></h4><small>Según el circuito elegido</small></div></div><select id="selectR2" class="select-res" aria-label="Resistencia 3 en ohmios" disabled></select></div>
+<button id="measureButton" class="measure-cta" type="button" disabled><span class="measure-number">3</span> ◉ Medir</button>
+<div class="challenge-guide" id="challengeGuide"><div class="challenge-copy"><strong id="challengeTitle">Medición inicial</strong><small id="challengeDescription">Primero mide el circuito sin cambios.</small></div></div>
+<div class="branch-action"><div class="ctrl-left"><span class="ctrl-icon">⎍</span><div><h4 id="branchTitle">Abrir o reconectar la rama 3</h4><small id="branchState">Conectada</small></div></div><button id="branchButton" class="branch-btn" type="button" disabled>Abrir rama 3</button></div>
+<div class="control"><div class="ctrl-left"><span class="ctrl-icon">e⁻</span><div><h4>Representación del flujo</h4><small>Sentido de movimiento</small></div></div><select id="flowMode" class="mode-choice" aria-label="Sentido del flujo"><option value="electron">Electrones (− → +)</option><option value="conventional">Corriente (+ → −)</option></select></div>
+<div class="control"><div class="ctrl-left"><span class="ctrl-icon">◉</span><div><h4>Animar el flujo</h4><small>Movimiento ilustrativo</small></div></div><button id="flowToggle" class="toggle" aria-pressed="true" aria-label="Activar o desactivar animación de flujo" type="button"></button></div>
+<div class="note" id="instruction" role="status" aria-live="polite"><strong>Paso 1:</strong> elige un circuito mixto, Resistores o Lámparas, y coloca las piezas.</div>
+<div class="lab-actions"><button class="secondary" id="newPredictionButton" type="button" disabled>↻ Nueva predicción</button><button class="secondary review-btn" id="reviewButton" type="button" disabled><span class="review-badge">4</span> Revisar mis predicciones</button></div>
+<button id="quizButton" class="quiz-button" type="button" disabled><span class="quiz-badge">5</span> Evalúo mis conocimientos</button><div class="quiz-status" id="quizStatus">Disponible al pulsar Comenzar.</div>
+<p class="smallprint">Modelo con fuente ideal. El selector cambia la resistencia asignada a cada lámpara idealizada, no la resistencia térmica de una lámpara real. El brillo representa potencia; la velocidad de las partículas es ilustrativa, no la velocidad real de los electrones.</p>
+</div></aside></div>
+<div class="note footer-note"><strong>Recorrido:</strong> armar (1) → predecir (2; opcional) → medir el circuito inicial y probar tres cambios independientes (3) → revisar (4) → evaluar (5). Los tres desafíos se comparan con el mismo montaje completo.</div>
+</main></div>
+<div id="modalOverlay" class="overlay" hidden><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-head"><h2 id="modalTitle">ElectroLab</h2><button id="modalClose" class="close-modal" type="button" aria-label="Cerrar ventana">×</button></div><div class="modal-body" id="modalBody"></div></div></div>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const optionValues=[15,20,25,30,40,50,60,75,100];
+const state={topology:null,mode:null,slots:[false,false,false],selected:false,phase:'assembly',voltage:9,resistances:[20,20,20],branchOpen:false,flowMode:'electron',showFlow:true,reading:null,baseline:null,history:[],answers:null,predQuestions:[],quizScore:null,measurementId:0,eqRevealed:new Set(),challengeBase:null,challengeReadings:[null,null,null,null]};
+let onModalClose=null;
+const esc=x=>String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const shuffle=a=>{const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;};
+const fmt=n=>Number(n).toFixed(2).replace('.',',');
+const fmtA=n=>`${fmt(n)} A`;
+const fmtV=n=>n===null?'—':`${fmt(n)} V`;
+const fmtW=n=>`${fmt(n)} W`;
+const fmtR=n=>Number.isFinite(n)?`${fmt(n)} Ω`:'Abierto';
+const pieceName=(i,mode=state.mode)=>(mode==='lamp'?'L':'R')+('₁₂₃'[i]);
+const enoughToStart=()=>state.topology!==null&&state.mode!==null&&state.slots.some(Boolean);
+const complete=()=>state.slots.every(Boolean);
+const readyForChallenges=()=>complete()&&state.topology!==null&&state.mode!==null;
+const baseSpec=()=>({topology:state.topology,mode:state.mode,slots:[...state.slots],resistances:[...state.resistances],voltage:state.voltage,branchOpen:false});
+function model(opts={}){
+ const topology=opts.topology??state.topology,mode=opts.mode??state.mode,slots=opts.slots??state.slots,resistances=opts.resistances??state.resistances,voltage=opts.voltage??state.voltage,branchOpen=opts.branchOpen??state.branchOpen;
+ const r=slots.map((on,i)=>on?resistances[i]:null);let it=0,req=Infinity,branchI=[0,0,0],branchV=[null,null,null],active=[false,false,false];
+ if(topology==='A'){
+  const valid1=r[0]!==null, valid2=r[1]!==null,valid3=r[2]!==null&&!branchOpen;
+  const gp=(valid2?1/r[1]:0)+(valid3?1/r[2]:0),rp=gp>0?1/gp:Infinity;
+  req=valid1&&gp>0?r[0]+rp:Infinity;it=Number.isFinite(req)?voltage/req:0;
+  const vPar=Number.isFinite(req)?voltage-it*r[0]:0;
+  branchI=[it,valid2?vPar/r[1]:0,valid3?vPar/r[2]:0];
+  branchV=[valid1?it*r[0]:null,valid2?vPar:null,valid3?vPar:null];
+  active=[valid1&&it>0,valid2&&it>0,valid3&&it>0];
+ }else if(topology==='B'){
+  const valid12=r[0]!==null&&r[1]!==null,valid3=r[2]!==null&&!branchOpen;
+  const gs=(valid12?1/(r[0]+r[1]):0)+(valid3?1/r[2]:0);
+  req=gs>0?1/gs:Infinity;it=Number.isFinite(req)?voltage/req:0;
+  const iseries=valid12?voltage/(r[0]+r[1]):0,i3=valid3?voltage/r[2]:0;
+  branchI=[iseries,iseries,i3];branchV=[r[0]!==null?iseries*r[0]:null,r[1]!==null?iseries*r[1]:null,valid3?voltage:null];
+  active=[valid12&&iseries>0,valid12&&iseries>0,valid3&&i3>0];
+ }
+ const powers=branchI.map((i,n)=>i*i*(r[n]??0));
+ return {topology,mode,slots:[...slots],resistances:[...resistances],r,voltage,branchOpen,it,req,branchI,branchV,powers,pTotal:it*voltage,closed:it>1e-10,active};
+}
+function openModal(title,html,closeCb=null){onModalClose=closeCb;$('modalTitle').textContent=title;$('modalBody').innerHTML=html;$('modalOverlay').hidden=false;$('modalClose').focus();}
+function closeModal(){if($('modalOverlay').hidden)return;$('modalOverlay').hidden=true;$('modalBody').innerHTML='';const cb=onModalClose;onModalClose=null;if(cb)cb();}
+$('modalClose').addEventListener('click',closeModal);
+$('modalOverlay').addEventListener('click',e=>{if(e.target===$('modalOverlay'))closeModal();});
+window.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('modalOverlay').hidden)closeModal();});
+function resetLearning(){state.reading=null;state.baseline=null;state.history=[];state.challengeBase=null;state.challengeReadings=[null,null,null,null];state.answers=null;state.predQuestions=[];state.eqRevealed.clear();}
+function chooseTopology(t){if(state.topology===t)return;state.topology=t;state.phase='assembly';state.branchOpen=false;state.selected=false;resetLearning();render();}
+function chooseMode(mode){if(state.mode===mode)return;state.mode=mode;state.resistances=[mode==='lamp'?30:20,mode==='lamp'?30:20,mode==='lamp'?30:20];state.phase='assembly';state.branchOpen=false;state.selected=false;resetLearning();render();}
+for(const b of document.querySelectorAll('.circuit-choice'))b.addEventListener('click',()=>chooseTopology(b.dataset.topology));
+for(const b of document.querySelectorAll('.mode-choice-btn'))b.addEventListener('click',()=>chooseMode(b.dataset.mode));
+function place(slot,fromDrop=false){
+ if(state.topology===null||state.mode===null){openModal('Primero selecciona','<p>Elige <b>Mixto 1</b> o <b>Mixto 2</b> y después <b>Resistores</b> o <b>Lámparas</b>.</p>');return;}
+ if(!state.selected&&!fromDrop){openModal('Elige una pieza','<p>Selecciona <b>Resistor</b> o <b>Lámpara</b> en la bandeja y haz clic en cualquiera de los tres espacios; también puedes arrastrarla.</p>');return;}
+ if(state.slots[slot]){state.selected=false;render();return;}
+ state.slots[slot]=true;state.selected=false;if(state.phase==='assembly')resetLearning();state.reading=null;render();
+}
+const tool=$('pieceTool');
+tool.onclick=()=>{if(state.mode===null||state.topology===null){openModal('Primero selecciona','<p>Elige un tipo de circuito y componentes antes de colocar piezas.</p>');return;}state.selected=!state.selected;render();};
+tool.addEventListener('dragstart',e=>{if(state.mode===null||state.topology===null){e.preventDefault();return;}state.selected=true;e.dataTransfer.setData('text/plain','electrolab-piece');e.dataTransfer.effectAllowed='copy';});
+tool.addEventListener('dragend',()=>{state.selected=false;render();});
+function start(){if(!enoughToStart())return;state.phase='prediction';state.branchOpen=false;resetLearning();render();showPredictions();}
+$('startButton').onclick=start;
+$('newPredictionButton').onclick=()=>{if(!enoughToStart())return;state.phase='prediction';state.branchOpen=false;resetLearning();render();showPredictions();};
+function beginExperiment(){state.phase='experiment';render();}
+// Intensidad visual calculada únicamente a partir de la potencia de CADA lámpara.
+// La escala es FIJA para el laboratorio: no normalizar respecto de las otras lámparas,
+// pues eso haría cambiar el brillo de una rama aunque su potencia no cambiara.
+function lampBrightness(power){
+ if(!(power>1e-9))return 0;
+ const response=1-Math.exp(-Math.pow(power/.72,1.85));
+ return Math.min(.99,.09+.90*response);
+}
+function blendLampColor(start,end,fraction){
+ const t=Math.max(0,Math.min(1,fraction));
+ return '#'+[1,3,5].map(k=>Math.round(parseInt(start.slice(k,k+2),16)*(1-t)+parseInt(end.slice(k,k+2),16)*t).toString(16).padStart(2,'0')).join('');
+}
+function drawPart(i,m){
+ const topology=state.topology,isA=topology==='A',isVertical=!isA||i>0;
+ const positions=isA?[[290,112],[500,242],[700,242]]:[[470,169],[470,308],[700,242]];
+ const [x,y]=positions[i],filled=state.slots[i],p=m.powers[i]||0,glow=filled&&state.mode==='lamp'?lampBrightness(p):0;
+ const haloScale=glow>0?Math.min(1,Math.log1p(p)/Math.log1p(15)):0;
+ let shape;
+ if(!filled){shape=`<rect class="svg-slot" x="${x-(isVertical?37:56)}" y="${y-(isVertical?54:38)}" width="${isVertical?74:112}" height="${isVertical?108:76}" rx="14"/><text x="${x}" y="${y+5}" text-anchor="middle" class="svg-caption">?</text>`;}
+ else if(state.mode==='lamp'){
+  const leads=isVertical?`<path class="svg-wire" d="M${x} ${y-54}V${y-29} M${x} ${y+29}V${y+54}"/>`:`<path class="svg-wire" d="M${x-58} ${y}H${x-29} M${x+29} ${y}H${x+58}"/>`;
+  // Un cambio de potencia se muestra en el núcleo, el halo y los rayos; cero W = apagada.
+  const fill=glow===0?'#e6eef0':glow<=.45?blendLampColor('#e6eef0','#efc65e',glow/.45):blendLampColor('#efc65e','#fffef1',(glow-.45)/.55);
+  const rays=glow>0?Array.from({length:8},(_,k)=>{
+   const angle=Math.PI*k/4,start=35+5*glow,end=start+7+15*glow+17*haloScale;
+   return `<line x1="${(x+Math.cos(angle)*start).toFixed(1)}" y1="${(y+Math.sin(angle)*start).toFixed(1)}" x2="${(x+Math.cos(angle)*end).toFixed(1)}" y2="${(y+Math.sin(angle)*end).toFixed(1)}" stroke="#e5a721" stroke-width="${(1+3.3*glow).toFixed(2)}" opacity="${(.12+.85*glow).toFixed(2)}" stroke-linecap="round"/>`;
+  }).join(''):'';
+  const outer=glow>0?`<circle cx="${x}" cy="${y}" r="${(39+28*glow+37*haloScale).toFixed(1)}" fill="url(#lampGlowN3)" opacity="${(.12+.84*glow).toFixed(2)}"/>`:'';
+  const inner=glow>0?`<circle cx="${x}" cy="${y}" r="${(32+22*glow).toFixed(1)}" fill="url(#lampGlowN3)" opacity="${(.12+.76*glow).toFixed(2)}"/>`:'';
+  shape=`${leads}${outer}${inner}${rays}<circle cx="${x}" cy="${y}" r="29" stroke="${glow>0?'#bc9024':'#7c9ca4'}" stroke-width="3" fill="${fill}"/><path d="M${x-12} ${y-10}L${x+12} ${y+10} M${x+12} ${y-10}L${x-12} ${y+10}" fill="none" stroke="${glow>0?'#a87c24':'#8a9da0'}" stroke-width="2.3"/><path d="M${x-12} ${y+28}H${x+12}" stroke="#6d7f82" stroke-width="5" stroke-linecap="round"/>`;
+ }else{shape=isVertical?`<path d="M${x} ${y-54}V${y-39}L${x-16} ${y-28}L${x+16} ${y-14}L${x-16} ${y}L${x+16} ${y+14}L${x-16} ${y+28}L${x} ${y+39}V${y+54}" fill="none" stroke="#287e8d" stroke-width="5.6" stroke-linecap="round" stroke-linejoin="round"/>`:`<path d="M${x-58} ${y}H${x-40}L${x-28} ${y-15}L${x-15} ${y+15}L${x-2} ${y-15}L${x+11} ${y+15}L${x+25} ${y-15}L${x+40} ${y}H${x+58}" fill="none" stroke="#287e8d" stroke-width="5.6" stroke-linecap="round" stroke-linejoin="round"/>`;}
+ const label=isA?(i===0?[x,174]:[x,328]):(i===2?[x,328]:[387,y+5]);
+ const tag=`${pieceName(i)} = ${m.resistances[i]} Ω${i===2&&state.branchOpen?' (abierta)':''}`;
+ return `<g class="svg-drop" data-slot="${i}" data-power="${p.toFixed(5)}" data-luminosity="${glow.toFixed(5)}" role="button" tabindex="0" aria-label="Espacio ${i+1}: ${filled?esc(tag):'vacío'}. Colocar pieza"><rect x="${x-(isVertical?60:75)}" y="${y-(isVertical?58:49)}" width="${isVertical?120:150}" height="${isVertical?116:98}" rx="13" fill="transparent"/>${shape}<text x="${label[0]}" y="${label[1]}" class="svg-value" text-anchor="middle">${filled?esc(tag):'Espacio '+(i+1)}</text><rect x="${x-(isVertical?60:75)}" y="${y-(isVertical?58:49)}" width="${isVertical?120:150}" height="${isVertical?116:98}" rx="13" fill="transparent"/></g>`;
+}
+function dotFlow(path,color,offset,seconds,withLabel){
+ const sym=state.flowMode==='electron'?'e⁻':'I';
+ return `<g class="animated-flow"><circle class="flow-dot" r="9.5" fill="${color}"/><text text-anchor="middle" dy="3.2" class="flow-electron-label">${withLabel?sym:''}</text><animateMotion path="${path}" dur="${seconds.toFixed(2)}s" begin="${offset.toFixed(2)}s" repeatCount="indefinite"/></g>`;
+}
+function renderFlow(m){
+ if(!state.showFlow||!m.closed)return '';
+ const e=state.flowMode==='electron',a=state.topology==='A';
+ // The common track ends at the junction. Branch colors start at that junction,
+ // not only near their resistors. With electrons, splitting takes place at the lower node.
+ const paths=a?(
+  e?[
+   {p:'M110 260V365H500',len:495,c:'#1597a5',i:m.it},
+   {p:'M500 365V112',len:253,c:'#d49d2b',i:m.branchI[1]},
+   {p:'M500 365H700V112H500',len:653,c:'#8464c7',i:m.branchI[2]},
+   {p:'M500 112H110V195',len:473,c:'#1597a5',i:m.it}
+  ]:[
+   {p:'M110 195V112H500',len:473,c:'#1597a5',i:m.it},
+   {p:'M500 112V365',len:253,c:'#d49d2b',i:m.branchI[1]},
+   {p:'M500 112H700V365H500',len:653,c:'#8464c7',i:m.branchI[2]},
+   {p:'M500 365H110V260',len:495,c:'#1597a5',i:m.it}
+  ]
+ ):(
+  e?[
+   {p:'M110 270V410H470',len:465,c:'#1597a5',i:m.it},
+   {p:'M470 410V90',len:320,c:'#d49d2b',i:m.branchI[0]},
+   {p:'M470 410H700V90H470',len:780,c:'#8464c7',i:m.branchI[2]},
+   {p:'M470 90H110V190',len:460,c:'#1597a5',i:m.it}
+  ]:[
+   {p:'M110 190V90H470',len:460,c:'#1597a5',i:m.it},
+   {p:'M470 90V410',len:320,c:'#d49d2b',i:m.branchI[0]},
+   {p:'M470 90H700V410H470',len:780,c:'#8464c7',i:m.branchI[2]},
+   {p:'M470 410H110V270',len:465,c:'#1597a5',i:m.it}
+  ]
+ );
+ const maxI=Math.max(m.it,1e-5);let paint='',particles='';
+ for(let k=0;k<paths.length;k++){
+  const q=paths[k];if(q.i<1e-10)continue;
+  // More current -> more markers and faster illustrative motion, not literal electron drift.
+  const speed=80+95*q.i/(q.i+.20);
+  const dur=q.len/speed,number=Math.max(2,Math.min(7,Math.round(2+5*q.i/maxI)));
+  paint+=`<path d="${q.p}" stroke="${q.c}" stroke-width="7" opacity=".38" fill="none" stroke-linecap="round"/>`;
+  for(let j=0;j<number;j++)particles+=dotFlow(q.p,q.c,-dur*j/number,dur,j===0);
+ }
+ const split=a?(e?[500,365]:[500,112]):(e?[470,410]:[470,90]);
+ const dy=e?-1:1;
+ const branches=`<circle cx="${split[0]}" cy="${split[1]}" r="9" fill="#f7fdff" stroke="#1597a5" stroke-width="3"/>
+  <path d="M${split[0]} ${split[1]+dy*14}v${dy*25}" stroke="#d49d2b" stroke-width="5" stroke-linecap="round"/>
+  <path d="M${split[0]+12} ${split[1]}h28" stroke="#8464c7" stroke-width="5" stroke-linecap="round"/>`;
+ return `<g aria-hidden="true" class="flow-visual">${paint}${branches}${particles}</g>`;
+}
+function renderCircuit(){
+ const m=model(),isA=state.topology!=='B';
+ const defs=`<defs><radialGradient id="lampGlowN3"><stop offset="0" stop-color="#ffca33" stop-opacity=".98"/><stop offset=".45" stop-color="#ffe17b" stop-opacity=".68"/><stop offset="1" stop-color="#fff0c3" stop-opacity="0"/></radialGradient><pattern id="gridN3" width="27" height="27" patternUnits="userSpaceOnUse"><path d="M27 0H0V27" fill="none" stroke="#e2f0f2" stroke-width="1"/></pattern></defs><rect x="9" y="9" width="832" height="444" rx="13" fill="url(#gridN3)" opacity=".72"/>`;
+ let base='',switchSvg='',nodes='';
+ if(isA){base=`<path class="svg-wire" d="M110 112V195 M110 260V365H700 M110 112H232 M348 112H700 M500 112V189 M500 295V365 M700 112V147 M700 178V189 M700 295V365"/><path class="svg-wire" d="M75 209H150 M88 242H136"/>`;
+ switchSvg=state.branchOpen?`<circle cx="700" cy="147" r="5.5" fill="#fff" stroke="#b95450" stroke-width="3"/><circle cx="700" cy="178" r="5.5" fill="#fff" stroke="#b95450" stroke-width="3"/><path d="M700 147L720 168" class="svg-separation"/><text x="738" y="165" class="svg-label-open">Abierta</text>`:`<path d="M700 147V178" class="svg-wire"/>`;
+ nodes=`<circle cx="500" cy="112" r="7" fill="#276c7c"/><circle cx="500" cy="365" r="7" fill="#276c7c"/>`;
+ }else{base=`<path class="svg-wire" d="M110 90V190 M110 270V410H700 M110 90H700 M470 90V115 M470 223V254 M470 362V410 M700 90V130 M700 160V189 M700 295V410"/><path class="svg-wire" d="M75 205H150 M88 252H136"/>`;
+ switchSvg=state.branchOpen?`<circle cx="700" cy="130" r="5.5" fill="#fff" stroke="#b95450" stroke-width="3"/><circle cx="700" cy="160" r="5.5" fill="#fff" stroke="#b95450" stroke-width="3"/><path d="M700 130L720 151" class="svg-separation"/><text x="738" y="150" class="svg-label-open">Abierta</text>`:`<path d="M700 130V160" class="svg-wire"/>`;
+ nodes=`<circle cx="470" cy="90" r="7" fill="#276c7c"/><circle cx="470" cy="410" r="7" fill="#276c7c"/><circle cx="700" cy="90" r="7" fill="#276c7c"/><circle cx="700" cy="410" r="7" fill="#276c7c"/>`;
+ }
+ const title=state.topology==='B'?'Mixto 2: (R₁ + R₂) ∥ R₃':'Mixto 1: R₁ + (R₂ ∥ R₃)';
+ const polarity=`<text class="svg-source" x="72" y="${isA?182:183}">+</text><text class="svg-source" x="72" y="${isA?281:290}">−</text><text class="svg-caption-small" x="33" y="337">${m.voltage} V · CC</text>`;
+ const rule=isA?'Iₜ = I₁ = I₂ + I₃':'Iₜ = I₁ + I₃; I₁ = I₂';
+ $('svgCircuit').innerHTML=defs+`<text x="29" y="41" class="svg-caption">${title}</text><text x="29" y="63" class="svg-caption-small">Fuente ideal de ${m.voltage} V · ${m.closed?'Circuito conductor':'Trayectoria abierta'}</text>`+base+polarity+switchSvg+renderFlow(m)+drawPart(0,m)+drawPart(1,m)+drawPart(2,m)+nodes+`<text x="611" y="445" class="svg-legend">${rule}</text>`;
+ for(const el of $('svgCircuit').querySelectorAll('.svg-drop')){const i=Number(el.dataset.slot);el.addEventListener('click',()=>place(i));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();place(i);}});el.addEventListener('dragover',e=>{e.preventDefault();if(e.dataTransfer)e.dataTransfer.dropEffect='copy';});el.addEventListener('drop',e=>{e.preventDefault();if(e.dataTransfer?.getData('text/plain')==='electrolab-piece')place(i,true);});}
+}
+function challengeConfig(){const isA=state.topology!=='B';return isA?[
+ {label:'Medición inicial',desc:'Mide con las tres cargas conectadas.',key:'baseline'},
+ {label:'Cambiar elemento 3',desc:'Duplica la resistencia del elemento 3; después mide.',key:'double',which:2},
+ {label:'Abrir rama 3',desc:'Desconecta la rama 3; después mide.',key:'open'},
+ {label:'Cambiar elemento 1',desc:'Duplica la resistencia de la parte común; después mide.',key:'double',which:0}
+ ]:[
+ {label:'Medición inicial',desc:'Mide con las tres cargas conectadas.',key:'baseline'},
+ {label:'Cambiar elemento 2',desc:'Duplica la resistencia en la rama en serie; después mide.',key:'double',which:1},
+ {label:'Abrir rama 3',desc:'Desconecta la rama paralela 3; después mide.',key:'open'},
+ {label:'Cambiar elemento 3',desc:'Duplica la resistencia de la rama independiente; después mide.',key:'double',which:2}
+ ];}
+function scenarioTarget(index){const base=state.challengeBase;if(!base)return null;const spec={topology:base.topology,mode:base.mode,resistances:[...base.resistances],voltage:base.voltage,slots:[true,true,true],branchOpen:false};const cfg=challengeConfig()[index];if(cfg.key==='double')spec.resistances[cfg.which]*=2;if(cfg.key==='open')spec.branchOpen=true;return spec;}
+function scenarioIndex(m){const base=state.challengeBase;if(!base||m.voltage!==base.voltage||m.topology!==base.topology||m.mode!==base.mode||!m.slots.every(Boolean))return -1;for(let i=0;i<4;i++){const s=scenarioTarget(i);if(s.branchOpen===m.branchOpen&&s.resistances.every((r,j)=>r===m.resistances[j]))return i;}return -1;}
+function nextChallenge(){for(let i=0;i<4;i++)if(!state.challengeReadings[i])return i;return 4;}
+function changeControls(){
+ for(let i=0;i<3;i++){
+  const el=$('selectR'+i);el.innerHTML='';
+  const reference=state.challengeBase?.resistances[i],values=[...new Set([...optionValues,state.resistances[i],reference,reference?reference*2:null].filter(v=>Number.isFinite(v)))].sort((a,b)=>a-b);
+  for(const v of values)el.add(new Option(`${v} Ω`,String(v)));
+  el.value=String(state.resistances[i]);el.disabled=state.phase==='assembly'||!state.slots[i];
+  el.setAttribute('aria-label',`Resistencia del ${state.mode==='lamp'?'modelo de lámpara':'resistor'} ${i+1}, en ohmios`);
+ }
+}
+function render(){
+ const m=model(),experiment=state.phase!=='assembly',active=state.topology!==null&&state.mode!==null;
+ for(const b of document.querySelectorAll('.circuit-choice')){const on=b.dataset.topology===state.topology;b.classList.toggle('active',on);b.setAttribute('aria-pressed',String(on));}
+ for(const b of document.querySelectorAll('.mode-choice-btn')){const on=b.dataset.mode===state.mode;b.classList.toggle('active',on);b.setAttribute('aria-pressed',String(on));}
+ const pieceText=state.mode==='lamp'?'💡 Lámpara':'▱ Resistor';tool.innerHTML=`<span class="symbol">${state.mode==='lamp'?'💡':'Ω'}</span><span>${state.mode==='lamp'?'Lámpara':'Resistor'}</span>`;tool.classList.toggle('lamp',state.mode==='lamp');tool.setAttribute('aria-pressed',String(state.selected));tool.disabled=!active;
+ $('paletteTip').textContent=active?'Arrastra la pieza a cualquier espacio, tantas veces como necesites (máximo tres). Puedes retirarla después.':'Primero elige el tipo de circuito y los componentes.';
+ $('stageLabel').textContent=!active?'Elegir circuito y piezas':state.phase==='assembly'?'1 · Armar el circuito':state.phase==='prediction'?'2 · Predicciones':state.phase==='review'?'4 · Revisar ideas':'3 · Experimentar';
+ $('mountStatus').textContent=state.topology===null?'Elige Mixto 1 o Mixto 2':`${state.topology==='A'?'Mixto 1':'Mixto 2'} · ${state.slots.filter(Boolean).length} de 3 espacios ocupados`;
+ $('mountPill').textContent=!active?'Sin montaje':m.closed?'Conduce corriente ✓':'Trayectoria abierta';
+ for(let i=0;i<3;i++){$('remove'+i).disabled=!state.slots[i];$('remove'+i).textContent=`✕ Retirar ${i+1}`;document.querySelectorAll('.labelPiece'+(i+1)).forEach(el=>el.textContent=pieceName(i));}
+ changeControls();
+ $('startButton').disabled=!enoughToStart()||experiment;$('minusVoltage').disabled=!experiment||state.voltage<=3;$('plusVoltage').disabled=!experiment||state.voltage>=24;$('voltageLabel').textContent=`${state.voltage} V`;
+ $('measureButton').disabled=!experiment||!active||!state.slots.some(Boolean);
+ $('branchButton').disabled=!experiment||!state.slots[2];$('branchButton').textContent=state.branchOpen?'Reconectar rama 3':'Abrir rama 3';$('branchButton').classList.toggle('opened',state.branchOpen);
+ $('branchTitle').textContent='Abrir o reconectar la rama 3';$('branchState').textContent=state.branchOpen?'Abierta':'Conectada';
+ const next=nextChallenge(),guided=!!state.challengeBase;let title='Medición inicial',desc=complete()?'Pulsa Medir con las tres cargas conectadas.':'Para los desafíos, coloca las tres cargas y pulsa Medir.';
+ if(guided&&next>=1&&next<=3){
+  const cfg=challengeConfig()[next],base=state.challengeBase;
+  const changedR=cfg.key==='double';const n=cfg.which;
+  const name=changedR?pieceName(n):pieceName(2);
+  const original=changedR?base.resistances[n]:base.resistances[2];
+  const target=changedR?original*2:original;
+  const current=scenarioIndex(m);
+  title=`Desafío ${next} de 3 · ${changedR?`Resistencia de ${name}`:'Rama 3'}`;
+  if(changedR){
+   const others=base.resistances.map((r,i)=>i===n?'':(state.resistances[i]!==r?`${pieceName(i)} a ${r} Ω`:'')).filter(Boolean);
+   const restore=others.length?` Primero devuelve ${others.join(' y ')}.`:'';
+   desc=`${restore} En «Valor de ${name}», elige ${target} Ω (inicial: ${original} Ω). Pulsa Medir.`;
+   if(state.branchOpen)desc=`Reconecta la rama 3. En «Valor de ${name}», elige ${target} Ω y pulsa Medir.`;
+  }else{
+   const restore=base.resistances.some((r,i)=>state.resistances[i]!==r);
+   desc=restore?`Restablece ${base.resistances.map((r,i)=>`${pieceName(i)}: ${r} Ω`).join('; ')}. Pulsa «Abrir rama 3» y después «Medir».`:'Pulsa «Abrir rama 3» y después «Medir».';
+  }
+  if(!complete()){
+   const missing=state.slots.map((present,i)=>present?null:pieceName(i)).filter(Boolean);
+   desc=`Primero vuelve a colocar ${missing.join(' y ')} en el circuito; después sigue el cambio indicado y pulsa Medir.`;
+   
+  }else if(state.voltage!==base.voltage){
+   desc=`Para comparar con la medición inicial, vuelve a poner la fuente en ${base.voltage} V. Después realiza el desafío y pulsa Medir.`;
+   
+  }else{
+   if(current===next)desc='Pulsa Medir para registrar este resultado.';
+  }
+ }
+ if(guided&&next===4){title='¡Tres desafíos completos!';desc='Revisa tus predicciones y compara los resultados.';}
+ $('challengeTitle').textContent=title;$('challengeDescription').textContent=desc;
+
+ $('newPredictionButton').disabled=!experiment||!enoughToStart();$('reviewButton').disabled=!experiment||!state.answers||!state.challengeReadings.every(Boolean);
+ $('quizButton').disabled=!experiment;$('quizStatus').textContent=state.quizScore==null?(experiment?'Disponible desde Comenzar.':'Disponible al pulsar Comenzar.'):`Último resultado: ${state.quizScore}/6; puedes repetir.`;
+ $('controlHint').textContent=experiment?'Controles activos':'Bloqueados hasta comenzar';$('flowMode').value=state.flowMode;$('flowToggle').setAttribute('aria-pressed',String(state.showFlow));
+ const v=state.reading;
+ const readingFields={readTotal:v?fmtA(v.it):'— A',readSourceVoltage:v?fmtV(v.voltage):'— V',readI1:v?fmtA(v.branchI[0]):'— A',readV1:v?fmtV(v.branchV[0]):'— V',readI2:v?fmtA(v.branchI[1]):'— A',readV2:v?fmtV(v.branchV[1]):'— V',readI3:v?fmtA(v.branchI[2]):'— A',readV3:v?fmtV(v.branchV[2]):'— V',readPower:v?fmtW(v.pTotal):'— W'};
+ for(const [id,label] of Object.entries(readingFields)){$(id).textContent=label;$(id).classList.toggle('pending',!v);}
+ const eqSeen=v&&state.eqRevealed.has(v.id);$('readReq').textContent=v?(eqSeen?fmtR(v.req):'¿? Ω'):'— Ω';$('readReq').classList.toggle('pending',!eqSeen);$('equivalentButton').disabled=!experiment||!v;
+ $('readingNote').textContent=v?`Mixto ${v.topology==='A'?'1':'2'} · ${v.branchOpen?'Rama 3 abierta':'Rama 3 conectada'} · ${v.closed?'Circula corriente':'Circuito sin corriente'} · ${v.voltage} V.`:'Los resultados aparecerán al pulsar Medir. Si falta una pieza, algunas trayectorias pueden quedar abiertas.';
+ if(!experiment)$('instruction').innerHTML=complete()?'<strong>Montaje completo.</strong> Pulsa Comenzar para registrar tus predicciones.':'<strong>Paso 1:</strong> coloca las piezas donde quieras; para trabajar los desafíos guiados necesitarás tres. Puedes experimentar con menos.';
+ else if(!state.challengeReadings[0])$('instruction').innerHTML=complete()?'<strong>Primero:</strong> mide el circuito completo para habilitar los tres desafíos.':'<strong>Exploración libre:</strong> puedes medir con espacios vacíos. Completa los tres para iniciar los desafíos.';
+ else if(next===4)$('instruction').innerHTML='<strong>¡Bien!</strong> Has medido los tres desafíos. Revisa tus predicciones y realiza la evaluación.';
+ else $('instruction').innerHTML=`<strong>Desafío ${next}:</strong> sigue el recuadro de instrucciones y pulsa Medir.`;
+ const summary=$('changeSummary'),base=state.challengeReadings[0],ix=v?scenarioIndex(v):-1;
+ summary.hidden=!(base&&v&&ix>0);if(!summary.hidden){const val=(f,m)=>f(m);summary.innerHTML=`<b>${challengeConfig()[ix].label}:</b> Iₜ ${fmt(base.it)} → ${fmt(v.it)} A · I₂ ${fmt(base.branchI[1])} → ${fmt(v.branchI[1])} A · V₁ ${fmt(base.branchV[0]??0)} → ${fmt(v.branchV[0]??0)} V · Pₜ ${fmt(base.pTotal)} → ${fmt(v.pTotal)} W`;} 
+ const recent=state.history.slice(-8).reverse();$('logContainer').innerHTML=recent.length?`<table class="log-table"><thead><tr><th>Estado</th><th>Vₜ</th><th>Iₜ</th><th>I₁</th><th>I₂</th><th>I₃</th><th>Rₑq</th></tr></thead><tbody>${recent.map(x=>`<tr><td>${x.topology==='A'?'M1':'M2'} · ${x.branchOpen?'rama 3 abierta':'conectada'}</td><td>${x.voltage}</td><td>${fmt(x.it)}</td><td>${fmt(x.branchI[0])}</td><td>${fmt(x.branchI[1])}</td><td>${fmt(x.branchI[2])}</td><td>${state.eqRevealed.has(x.id)?fmtR(x.req):'Por calcular'}</td></tr>`).join('')}</tbody></table>`:'Todavía no hay mediciones.';
+ $('svgCircuit').setAttribute('aria-label',state.topology==='B'?'Circuito mixto dos: dos resistores en serie en una rama, en paralelo con otro resistor':'Circuito mixto uno: uno en serie con dos ramas paralelas');
+ renderCircuit();
+}
+for(let i=0;i<3;i++){
+ $('remove'+i).onclick=()=>{state.slots[i]=false;if(i===2)state.branchOpen=false;if(state.phase==='assembly')resetLearning();state.reading=null;render();};
+ $('selectR'+i).onchange=e=>{state.resistances[i]=Number(e.target.value);state.reading=null;render();};
+}
+$('minusVoltage').onclick=()=>{state.voltage=Math.max(3,state.voltage-1);state.reading=null;render();};
+$('plusVoltage').onclick=()=>{state.voltage=Math.min(24,state.voltage+1);state.reading=null;render();};
+$('flowMode').onchange=e=>{state.flowMode=e.target.value;render();};
+$('flowToggle').onclick=()=>{state.showFlow=!state.showFlow;render();};
+$('branchButton').onclick=()=>{state.branchOpen=!state.branchOpen;state.reading=null;render();};
+$('measureButton').onclick=()=>{if(state.phase==='assembly'||!enoughToStart())return;const r={...model(),id:++state.measurementId};state.reading=r;state.history.push(r);
+ if(!state.challengeBase&&complete()&&!state.branchOpen){state.challengeBase=baseSpec();state.challengeReadings[0]=r;state.baseline=r;}
+ else if(state.challengeBase){const i=scenarioIndex(r);if(i>=0)state.challengeReadings[i]=r;}
+ render();};
+function predictionSet(){
+ if(!complete()){
+  const conducts=model().closed;
+  return [
+   {q:'Con las piezas colocadas en este momento, ¿habrá corriente total cuando empieces a medir?',opts:[['yes','Sí, existe al menos una trayectoria cerrada.'],['no','No, el circuito está abierto.'],['other','No estoy seguro/a.']],ok:conducts?'yes':'no',why:conducts?'Existe una trayectoria completa entre los dos polos de la fuente.':'Con las piezas actuales no hay ninguna trayectoria conductora completa.'},
+   {q:'Si después colocas las piezas que faltan, ¿qué deberías comprobar?',opts:[['paths','Si aparecen trayectorias cerradas y cómo se reparte la corriente.'],['always','Que la corriente sea idéntica en todos los elementos.'],['source','Que la fuente conserve siempre la misma corriente.']],ok:'paths',why:'Depende de la conexión y las resistencias; primero se reconocen los caminos completos.'}
+  ];
+ }
+ return state.topology==='A'?[
+  {q:'En el Mixto 1, ¿cómo se relaciona la corriente de la parte común con las dos ramas?',opts:[['sum','I₁ = I₂ + I₃.'],['equal','I₁ = I₂ = I₃ siempre.'],['consumed','La corriente se consume en R₁.']],ok:'sum',why:'Por conservación de la carga, la corriente común se divide entre las ramas.'},
+  {q:'Al duplicar R₃ sin abrir la rama, ¿qué ocurrirá con la corriente de R₂?',opts:[['up','Aumentará.'],['down','Disminuirá.'],['same','No cambiará.']],ok:'up',why:'Cambia la resistencia equivalente, baja la caída en R₁ y aumenta la tensión sobre las ramas.'},
+  {q:'Al abrir R₃, ¿qué ocurrirá con la corriente total y con I₂?',opts:[['opposite','La corriente total disminuye, pero I₂ aumenta.'],['both','Ambas disminuyen.'],['same','Ambas permanecen iguales.'],['other','Tengo otra idea.']],ok:'opposite',why:'En el Mixto 1, al cambiar la resistencia equivalente se redistribuyen las diferencias de potencial.'},
+  {q:'Al aumentar R₁, ¿qué ocurre con I₂?',opts:[['down','Disminuye.'],['up','Aumenta.'],['same','No cambia.']],ok:'down',why:'R₁ es común a ambas ramas: cuando aumenta, cae más voltaje en ella y se reduce la corriente de las ramas.'}
+ ]:[
+  {q:'En el Mixto 2, ¿cómo se relacionan las corrientes de los elementos 1 y 2?',opts:[['equal','I₁ = I₂: están en serie en la misma rama.'],['sum','I₁ = I₂ + I₃.'],['zero','No circula corriente por esa rama.']],ok:'equal',why:'R₁ y R₂ comparten una trayectoria; la corriente total es la suma de esa rama y la rama 3.'},
+  {q:'Si aumentamos R₂, ¿qué sucede con la corriente de R₃?',opts:[['same','Permanece igual con fuente ideal.'],['down','Disminuye tanto como I₂.'],['up','Aumenta porque R₂ creció.']],ok:'same',why:'R₃ está en otra rama conectada directamente a la misma fuente ideal; su voltaje se mantiene.'},
+  {q:'Si abrimos la rama R₃, ¿qué pasa con la corriente que circula por R₁ y R₂?',opts:[['same','Permanece igual; la fuente ideal mantiene el voltaje entre los nodos.'],['zero','Se hace cero en todo el circuito.'],['up','Aumenta necesariamente.']],ok:'same',why:'La rama con R₁ y R₂ sigue conectada a la fuente ideal, por lo que su corriente no cambia.'},
+  {q:'Si duplicamos R₃, ¿qué cambia en el circuito?',opts:[['third','Disminuyen I₃ y su potencia; la corriente de R₁–R₂ se mantiene.'],['all','Todas las corrientes disminuyen en igual proporción.'],['same','No se modifica ninguna corriente.']],ok:'third',why:'Las ramas paralelas mantienen el mismo voltaje; cambiar una modifica su corriente y la total, no la de la otra.'}
+ ];
+}
+function showPredictions(){const q=predictionSet();state.predQuestions=q;let body=`<div class="prediction-heading"><span class="num">2</span><div><strong>Predice antes de medir</strong><small>${complete()?'Cuatro preguntas':'Dos preguntas sobre el montaje parcial'} · Sin calificación. Puedes cerrar con ×.</small></div></div><p>${complete()?`Circuito <b>Mixto ${state.topology==='A'?'1':'2'}</b>, fuente de ${state.voltage} V y tres cargas.`:'Observa los espacios que has completado. Puedes explorar un circuito parcial antes de colocar las tres piezas.'}</p>`;
+ q.forEach((it,i)=>{const question=state.mode==='lamp'?it.q.replaceAll('R₁','L₁').replaceAll('R₂','L₂').replaceAll('R₃','L₃'):it.q;body+=`<fieldset class="q-card"><legend>${i+1}. ${esc(question)}</legend>${shuffle(it.opts).map(o=>`<label><input type="radio" name="pred${i}" value="${o[0]}"> ${esc(o[1])}</label>`).join('')}</fieldset>`;});
+ body+='<div id="predictionError" class="error"></div><div class="modal-actions"><button id="predHint" class="hint" type="button">💡 Pista</button><button id="predSave" class="primary" type="button">Guardar y experimentar</button></div><div id="predHintText" class="hint-box" hidden>Observa las trayectorias. En serie la corriente es igual y en paralelo se conserva la corriente en los nodos; la fuente es ideal.</div>';
+ openModal('Paso 2 · Predicciones',body,()=>{if(state.phase==='prediction')beginExperiment();});
+ $('predHint').onclick=()=>{$('predHintText').hidden=!$('predHintText').hidden;};
+ $('predSave').onclick=()=>{const a=q.map((item,i)=>document.querySelector(`input[name="pred${i}"]:checked`)?.value);if(a.some(v=>!v)){$('predictionError').textContent=`Responde las ${q.length} preguntas o cierra la ventana para experimentar.`;return;}state.answers=a.map((answer,i)=>({answer,question:q[i]}));state.phase='experiment';closeModal();render();};
+}
+$('reviewButton').onclick=()=>{if(!state.answers||!state.challengeReadings.every(Boolean))return;state.phase='review';render();
+ const [base,...rest]=state.challengeReadings,cfg=challengeConfig(),rows=[['I total',m=>fmtA(m.it)],['I₁',m=>fmtA(m.branchI[0])],['I₂',m=>fmtA(m.branchI[1])],['I₃',m=>fmtA(m.branchI[2])],['V₂',m=>fmtV(m.branchV[1])],['Potencia total',m=>fmtW(m.pTotal)],['R equivalente',m=>fmtR(m.req)]];
+ let body=`<div class="prediction-heading"><span class="num">4</span><div><strong>Revisa y explica tus predicciones</strong><small>Tres cambios, todos comparados con el mismo circuito inicial.</small></div></div><div class="table-scroll"><table class="results-table"><thead><tr><th>Magnitud</th><th>Inicial</th>${cfg.slice(1).map(x=>`<th>${esc(x.label)}</th>`).join('')}</tr></thead><tbody>${rows.map(([name,get])=>`<tr><td>${name}</td>${[base,...rest].map(m=>`<td>${get(m)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+ state.answers.forEach((x,i)=>{const c=x.question.opts.find(o=>o[0]===x.answer),ok=x.answer===x.question.ok;body+=`<div class="result-card ${ok?'':'wrong'}"><strong>${i+1}. ${esc(x.question.q)}</strong><p><b>Tu predicción:</b> ${esc(c?.[1]||x.answer)}</p><p><b>Explicación:</b> ${esc(x.question.why)}</p></div>`;});
+ body+='<p><b>Para explicar en la guía:</b> ¿por qué modificar una resistencia produce efectos diferentes según el lugar que ocupa en el circuito?</p><div class="modal-actions"><button id="doneReview" class="primary" type="button">Volver al laboratorio</button></div>';
+ openModal('Paso 4 · Revisar',body);$('doneReview').onclick=closeModal;
+};
+function diagramEq(m,collapsed=false){const color='#287887';const battery=`<path d="M45 36V70 M45 107V165 M19 81H70 M28 98H61" stroke="${color}" stroke-width="3.5" fill="none"/><text x="9" y="70" font-size="12" fill="${color}">+</text><text x="9" y="120" font-size="12" fill="${color}">−</text><text x="9" y="186" font-size="12" fill="${color}">${m.voltage} V</text>`;
+ const h=(x,y)=>`<path d="M${x-31} ${y}l9 -8 11 16 11 -16 11 16 11 -16 9 8" fill="none" stroke="${color}" stroke-width="3.6"/>`;
+ const v=(x,y)=>`<path d="M${x} ${y-31}l-8 10 16 11 -16 11 16 11 -8 10" fill="none" stroke="${color}" stroke-width="3.6"/>`;
+ let out='';if(collapsed){out=`<path d="M45 36H156 M218 36H375V165H45" fill="none" stroke="${color}" stroke-width="3.7"/>${h(187,36)}<text x="187" y="75" text-anchor="middle" font-size="15" fill="${color}">Rₑq = ${fmtR(m.req)}</text>`;}
+ else if(m.topology==='A'){out=`<path d="M45 36H110 M170 36H375 M262 36V70 M262 127V165 M375 36V70 M375 127V165 M45 165H375" fill="none" stroke="${color}" stroke-width="3.7"/>${m.slots[0]?h(140,36):'<text x="140" y="35">?</text>'}${m.slots[1]?v(262,99):'<text x="262" y="105">?</text>'}${m.slots[2]?v(375,99):'<text x="375" y="105">?</text>'}${m.branchOpen?'<path d="M375 56L392 77" stroke="#bd5950" stroke-width="4"/>':''}<text x="140" y="17" text-anchor="middle" fill="${color}" font-size="12">${pieceName(0,m.mode)}</text><text x="247" y="146" text-anchor="middle" fill="${color}" font-size="12">${pieceName(1,m.mode)}</text><text x="360" y="146" text-anchor="middle" fill="${color}" font-size="12">${pieceName(2,m.mode)}</text>`;}
+ else {out=`<path d="M45 36H375 M45 165H375 M256 36V55 M256 99V103 M256 147V165 M375 36V70 M375 127V165" fill="none" stroke="${color}" stroke-width="3.7"/>${m.slots[0]?v(256,77):'<text x="256" y="82">?</text>'}${m.slots[1]?v(256,125):'<text x="256" y="125">?</text>'}${m.slots[2]?v(375,99):'<text x="375" y="105">?</text>'}${m.branchOpen?'<path d="M375 56L393 77" stroke="#bd5950" stroke-width="4"/>':''}<text x="230" y="79" fill="${color}" font-size="12">${pieceName(0,m.mode)}</text><text x="230" y="127" fill="${color}" font-size="12">${pieceName(1,m.mode)}</text><text x="355" y="146" fill="${color}" font-size="12">${pieceName(2,m.mode)}</text>`;}
+ return `<svg viewBox="0 0 400 192" role="img" aria-label="${collapsed?'Circuito equivalente con una sola resistencia':'Circuito mixto original'}">${battery}${out}</svg>`;
+}
+function eqFormula(m){if(!Number.isFinite(m.req))return 'Circuito abierto: Rₑq tiende a infinito e I total es cero.';
+ if(m.topology==='A'){
+  const r=m.r;const branches=[1,2].filter(i=>r[i]!==null&&!(i===2&&m.branchOpen));if(branches.length===2)return `Rₑq = R₁ + (R₂ × R₃)/(R₂ + R₃) = ${r[0]} + (${r[1]} × ${r[2]})/(${r[1]} + ${r[2]}) = ${fmtR(m.req)}`;
+  return `Solo hay una rama paralela activa: Rₑq = ${r[0]} + ${r[branches[0]]} = ${fmtR(m.req)}`;
+ }
+ const r=m.r;const seriesActive=r[0]!=null&&r[1]!=null,branchActive=r[2]!=null&&!m.branchOpen;
+ if(seriesActive&&branchActive)return `R₁₂ = R₁ + R₂ = ${r[0]+r[1]} Ω; Rₑq = (R₁₂ × R₃)/(R₁₂ + R₃) = ${fmtR(m.req)}`;
+ return seriesActive?`Solo queda la rama en serie: Rₑq = R₁ + R₂ = ${fmtR(m.req)}`:`Solo queda R₃: Rₑq = R₃ = ${fmtR(m.req)}`;
+}
+function showEquivalent(){if(!state.reading)return;const m=state.reading;
+ let body=`<div class="prediction-heading"><span class="num" style="background:linear-gradient(110deg,#b67926,#d2a94b)">Ω</span><div><strong>Explorar resistencia equivalente</strong><small>Calcula primero; después observa el circuito simplificado.</small></div></div><div class="eq-diagram-wrap"><div id="eqTitle" class="eq-diagram-title">Circuito mixto original</div><div id="eqPicture">${diagramEq(m)}</div></div>`;
+ body+=Number.isFinite(m.req)?`<div class="eq-question"><label for="eqInput">¿Cuántos ohmios equivalen a este montaje?</label><input id="eqInput" class="eq-entry" type="number" step="any" min="0" placeholder="R en Ω"><button id="eqCheck" type="button" class="primary">Comprobar</button></div>`:`<div class="eq-question">¿Puede reemplazarse este circuito abierto por una resistencia positiva finita? <button id="eqCheck" type="button" class="primary">Ver respuesta</button></div>`;
+ body+='<div class="eq-error" id="eqMessage" aria-live="polite"></div><div id="eqDetails" class="eq-work" hidden></div>';
+ openModal('Resistencia equivalente',body);
+ function reveal(){state.eqRevealed.add(m.id);$('eqTitle').textContent='Circuito equivalente visto por la fuente';$('eqPicture').innerHTML=diagramEq(m,true);$('eqDetails').hidden=false;$('eqDetails').innerHTML=`<div class="eq-formula">${esc(eqFormula(m))}</div><p>Este resistor único representa la <b>corriente total vista por la fuente</b>, no las corrientes individuales ni el brillo.</p><div class="modal-actions"><button id="eqSwap" type="button" class="secondary">Ver circuito original</button><button id="eqReturn" type="button" class="primary">Volver</button></div>`;$('eqSwap').onclick=()=>{const original=$('eqTitle').textContent!=='Circuito mixto original';$('eqTitle').textContent=original?'Circuito mixto original':'Circuito equivalente visto por la fuente';$('eqPicture').innerHTML=diagramEq(m,!original);$('eqSwap').textContent=original?'Ver equivalente':'Ver circuito original';};$('eqReturn').onclick=()=>{closeModal();render();};render();}
+ let tries=0;$('eqCheck').onclick=()=>{if(!Number.isFinite(m.req)){reveal();return;}const raw=$('eqInput').value.trim().replace(',','.');const n=Number(raw);if(!raw||!Number.isFinite(n)||n<=0){$('eqMessage').textContent='Escribe una resistencia positiva.';return;}if(Math.abs(n-m.req)<=Math.max(.05,m.req*.005)){$('eqMessage').textContent='¡Correcto!';reveal();return;}tries++;$('eqMessage').textContent='Comprueba primero las agrupaciones en serie y en paralelo.';if(tries>=2&&!$('eqReveal')){const b=document.createElement('button');b.type='button';b.id='eqReveal';b.className='secondary';b.textContent='Ver cálculo y transformación';b.onclick=reveal;$('eqMessage').after(b);}};
+ if($('eqInput'))$('eqInput').onkeydown=e=>{if(e.key==='Enter')$('eqCheck').click();};
+}
+$('equivalentButton').onclick=showEquivalent;
+function miniDiagram(kind){const col='#2c7b89',a=kind==='A';let wires='',res='';if(a){wires='<path d="M19 29H61 M98 29H205 M133 29V47 M133 85V118 M205 29V47 M205 85V118 M19 118H205"/>';res='<path d="M61 29l8-7 7 14 7-14 7 14 8-7 M133 47l-7 7 14 7-14 7 14 7-7 10 M205 47l-7 7 14 7-14 7 14 7-7 10"/>';}else{wires='<path d="M19 29H205 M19 118H205 M130 29V38 M130 68V79 M130 109V118 M205 29V47 M205 87V118"/>';res='<path d="M130 38l-7 6 14 6-14 6 14 6-7 6 M130 79l-7 6 14 6-14 6 14 6-7 6 M205 47l-7 7 14 7-14 7 14 7-7 9"/>';}
+ return `<svg viewBox="0 0 225 140" role="img" aria-label="Esquema eléctrico sin nombre"><g stroke="${col}" fill="none" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">${wires}${res}<path d="M19 29V54 M19 84V118 M4 62H34 M9 77H29"/></g><text x="5" y="51" font-size="12" fill="${col}">+</text><text x="5" y="94" font-size="12" fill="${col}">−</text></svg>`;
+}
+function quizSet(){return state.topology==='B'?[
+ {q:'¿Cuál dibujo muestra una rama con dos resistores en serie, conectada en paralelo con un tercer resistor?',visual:true,opts:[['A','Mixto 1'],['B','Mixto 2']],ok:'B',why:'En Mixto 2, R₁ y R₂ comparten una rama y R₃ constituye la otra rama en paralelo.'},
+ {q:'En el Mixto 2, la corriente total de la fuente es...',opts:[['sum','La suma de la corriente por R₁–R₂ y la de R₃.'],['same','Igual a cada corriente de las tres cargas.'],['used','La diferencia entre las dos ramas.']],ok:'sum',why:'La corriente se divide en dos trayectorias; en la rama de R₁–R₂ circula una misma corriente.'},
+ {q:'Con fuente ideal de 12 V, al aumentar R₂, ¿qué ocurre con la corriente de R₃?',opts:[['same','No cambia, porque la rama 3 conserva 12 V.'],['down','Disminuye necesariamente.'],['up','Aumenta necesariamente.']],ok:'same',why:'R₃ conserva la diferencia de potencial de la fuente ideal.'},
+ {q:'Cuando se retira R₃, la rama con R₁ y R₂...',opts:[['on','Sigue funcionando con la misma corriente.'],['off','Deja de conducir por completo.'],['boost','Duplicará su corriente.']],ok:'on',why:'La rama R₁–R₂ permanece conectada a la fuente ideal.'},
+ {q:'Si R₃ aumenta de 20 a 40 Ω y la fuente conserva su voltaje, su potencia...',opts:[['down','Disminuye.'],['up','Aumenta.'],['same','No cambia.']],ok:'down',why:'A voltaje constante, P = V²/R; al duplicar R disminuye la potencia de esa rama.'},
+ {q:'Nuevo caso: R₁ = R₂ = R₃ = 20 Ω, fuente de 12 V. Si abres R₃, la corriente total...',opts:[['point3','Pasa de 0,90 A a 0,30 A.'],['zero','Se vuelve cero.'],['point6','Permanece en 0,90 A.']],ok:'point3',why:'Inicial: (20+20) Ω en paralelo con 20 Ω → 0,90 A. Abierta R₃, solo queda la rama de 40 Ω → 0,30 A.'}
+ ]:[
+ {q:'¿Cuál dibujo muestra un resistor en serie con dos ramas paralelas?',visual:true,opts:[['A','Mixto 1'],['B','Mixto 2']],ok:'A',why:'En Mixto 1, R₁ es común a las dos ramas paralelas R₂ y R₃.'},
+ {q:'En Mixto 1, ¿cómo se relaciona la corriente de R₁ con las de R₂ y R₃?',opts:[['sum','I₁ = I₂ + I₃.'],['same','I₁ = I₂ = I₃ siempre.'],['less','I₁ es menor que cualquiera de las corrientes de ramas.']],ok:'sum',why:'Por conservación de la carga, la corriente total es la suma de las dos ramas.'},
+ {q:'Si aumenta R₃ mientras las demás resistencias y la fuente permanecen constantes, I₂...',opts:[['up','Aumenta.'],['down','Disminuye.'],['same','No cambia.']],ok:'up',why:'Disminuye la caída de voltaje en R₁ y aumenta el voltaje en las ramas del paralelo.'},
+ {q:'Si abres la rama R₃, la corriente de R₂...',opts:[['up','Aumenta.'],['same','Permanece igual.'],['zero','Desaparece porque toda la conexión se abre.']],ok:'up',why:'El cambio en la resistencia equivalente modifica la distribución de voltajes del circuito mixto.'},
+ {q:'Si duplicas R₁ y mantienes las ramas conectadas, la corriente total...',opts:[['down','Disminuye.'],['up','Aumenta.'],['same','Se conserva exactamente.']],ok:'down',why:'La resistencia de la parte común aumenta y por ley de Ohm la corriente total disminuye.'},
+ {q:'Nuevo caso: R₁ = 10 Ω, R₂ = R₃ = 20 Ω, fuente de 12 V. Al abrir R₃, el voltaje en R₂...',opts:[['up','Aumenta de 6 V a 8 V.'],['down','Disminuye de 6 V a 4 V.'],['same','Permanece en 6 V.']],ok:'up',why:'Inicial: Rₑq = 20 Ω, Iₜ = 0,60 A, V₂ = 6 V. Al abrir R₃: Rₑq = 30 Ω, Iₜ = 0,40 A, V₂ = 8 V.'}
+ ];}
+$('quizButton').onclick=()=>{if(state.phase==='assembly')return;const questions=quizSet();let body='<div class="prediction-heading"><span class="num" style="background:linear-gradient(120deg,#bc8331,#d6a85b)">5</span><div><strong>Evalúo mis conocimientos</strong><small>6 preguntas · un punto cada una · alternativas aleatorias.</small></div></div>';
+ questions.forEach((q,i)=>{if(q.visual){const variants=shuffle(['A','B']);body+=`<fieldset class="q-card"><legend>${i+1}. ${esc(q.q)}</legend><div class="diagram-options">${variants.map((kind,j)=>`<label class="diagram-option"><b><input type="radio" name="quiz${i}" value="${kind}">Opción ${j===0?'A':'B'}</b>${miniDiagram(kind)}</label>`).join('')}</div></fieldset>`;}else{body+=`<fieldset class="q-card"><legend>${i+1}. ${esc(q.q)}</legend>${shuffle(q.opts).map(o=>`<label><input type="radio" name="quiz${i}" value="${o[0]}"> ${esc(o[1])}</label>`).join('')}</fieldset>`;}});
+ body+='<div id="quizError" class="error"></div><div class="modal-actions"><button id="gradeQuiz" class="primary" type="button">Calificar mis respuestas</button></div>';openModal('Paso 5 · Evaluación',body);
+ $('gradeQuiz').onclick=()=>{const answer=questions.map((q,i)=>document.querySelector(`input[name="quiz${i}"]:checked`)?.value);if(answer.some(a=>!a)){$('quizError').textContent='Responde las seis preguntas para obtener el puntaje.';return;}const score=answer.reduce((n,a,i)=>n+(a===questions[i].ok?1:0),0);state.quizScore=score;
+ let result=`<div class="score">Resultado: ${score} / 6 · ${Math.round(score*100/6)} %</div><p>Revisa las respuestas y sus explicaciones.</p>`;
+ result+=questions.map((q,i)=>{const selected=q.opts.find(x=>x[0]===answer[i])?.[1]||answer[i],correct=q.opts.find(x=>x[0]===q.ok)?.[1]||q.ok;return `<div class="result-card ${answer[i]===q.ok?'':'wrong'}"><strong>${i+1}. ${esc(q.q)}</strong><p><b>Tu respuesta:</b> ${esc(selected)}</p>${answer[i]===q.ok?'':`<p><b>Correcta:</b> ${esc(correct)}</p>`}<p>${esc(q.why)}</p></div>`;}).join('');result+='<div class="modal-actions"><button id="retryQuiz" type="button" class="secondary">Repetir evaluación</button><button id="finishQuiz" type="button" class="primary">Volver al laboratorio</button></div>';
+ openModal('Resultado de la evaluación',result);$('retryQuiz').onclick=()=>$('quizButton').click();$('finishQuiz').onclick=closeModal;render();};};
+$('helpButton').onclick=()=>openModal('Cómo usar ElectroLab · Nivel 3',`<p><b>1.</b> Elige Mixto 1 o Mixto 2, después Resistores o Lámparas. Arrastra la misma pieza a los espacios que prefieras; el nombre lo determina su posición.</p><p><b>2.</b> Pulsa Comenzar, responde las predicciones o cierra la ventana con ×.</p><p><b>3.</b> Pulsa Medir. Sigue las indicaciones del recuadro amarillo para cada desafío. Devuelve los valores al montaje inicial antes de cada nuevo desafío y mide de nuevo.</p><p><b>4.</b> Revisa tus predicciones y completa la evaluación.</p><p><b>Mixto 1:</b> R₁ + (R₂ ∥ R₃). <b>Mixto 2:</b> (R₁ + R₂) ∥ R₃. La segunda configuración no es solo un dibujo al revés: presenta una topología diferente.</p><p><b>Resistencia equivalente:</b> se calcula en el recuadro de mediciones, tras medir. <b>Lámparas:</b> se modelan como resistencias fijas, y el brillo ilustra la potencia.</p><p><b>Colores y movimiento:</b> los colores de las dos ramas aparecen desde el nodo de división; la animación representa de manera orientativa corrientes relativas, no la velocidad real de deriva de los electrones.</p>`);
+$('resetButton').onclick=()=>{state.topology=null;state.mode=null;state.slots=[false,false,false];state.selected=false;state.phase='assembly';state.voltage=9;state.resistances=[20,20,20];state.branchOpen=false;state.flowMode='electron';state.showFlow=true;state.quizScore=null;state.measurementId=0;resetLearning();closeModal();render();};
+render();
+
+</script>
+</body>
+</html>
